@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<style>
+  body {
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.7;
+      background-color: #f4f7f6;
+      color: #333;
+  }
+
+  .hero {
+    background: linear-gradient(135deg, #5a99c5, #3b47b7);
+    padding: 60px 20px;
+    color: white;
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 40px;
+  }
+
+  .hero h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+      font-weight: 600;
+  }
+
+  .hero p {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+  }
+
+  .btn-primary {
+      background-color: #fff;
+      color: #6e8efb;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1.1em;
+      font-weight: bold;
+      border-radius: 30px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .btn-primary:hover {
+      background-color: #f4f7f6;
+      color: #6e8efb;
+  }
+
+  .overview, .steps {
+      background-color: white;
+      padding: 30px;
+      margin-bottom: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .overview h2, .steps h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #333;
+      font-weight: 600;
+  }
+
+  .overview p {
+      font-size: 1.1em;
+      color: #555;
+  }
+
+  .overview ul {
+      padding-left: 20px;
+      list-style-type: disc;
+  }
+
+  .overview ul li {
+      font-size: 1em;
+      margin-bottom: 10px;
+      color: #555;
+  }
+
+  .steps .step {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+  }
+
+  .steps .step img {
+      width: 60px;
+      height: 60px;
+      margin-right: 20px;
+      border-radius: 50%;
+      border: 2px solid #6e8efb;
+  }
+
+  .steps .step p {
+      font-size: 1.1em;
+      color: #555;
+  }
+
+  .modal-footer .btn-primary {
+      background-color: #a2c5f9; 
+      color: #333;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      cursor: not-allowed;
+  }
+
+  .modal-footer .btn-primary.active {
+      background-color: #FF5733; 
+      color: #fff;
+      cursor: pointer;
+  }
+
+</style>
+
+<section class="hero">
+    <h1><b>Welcome to Our Research Study</b></h1>
+    <p>Students in an introductory programming course make various logical errors in their programs. This is a CS education research project whose goal is to identify logical errors that students make in programs and generate feedback for those errors. The feedback is a description of errors in the English language. <br>
+    We invite you to participate in this user study and share your views. Your consent is required for us to use your responses for our research. We assure you that no identifying information, such as your name, email address, or IP address, will be made public. The results of this study will be used solely for research purposes.</p>
+    <button type="button" class="btn btn-primary" id="myBtn">Participate Now!</button>
+</section>
+
+<section class="overview">
+    <h2>Study Overview</h2>
+    <p>This study aims to uncover common logical errors in students' programming assignments and offer detailed feedback. By participating, you will help generate valuable insights for advancing computer science education.</p>
+    <ul>
+        <li>Enhance the quality of programming education.</li>
+        <li>Be part of innovative research in the field.</li>
+        <li>Your participation will remain fully anonymous.</li>
+    </ul>
+</section>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel">Consent</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Please give your consent by clicking on the "I agree" checkbox below which indicates that: <br>
+          1. You have read the information on the homepage. <br>
+          2. You voluntarily agree to participate in this study. </p>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="acceptCheckbox">
+          <label class="form-check-label" for="acceptCheckbox">I agree</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="acceptButton" disabled>Proceed</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  $(document).ready(function(){
+    $('#myBtn').click(function() {
+      $('#myModal').modal('show');
+    });
+
+    $('#acceptButton').click(function() {
+      if ($('#acceptCheckbox').is(':checked')) {
+        window.location.href = "{% url 'participate' %}";
+      } else {
+        alert('Please accept the terms and conditions.');
+      }
+    });
+
+    $('#acceptCheckbox').change(function() {
+      if ($(this).is(':checked')) {
+        $('#acceptButton').prop('disabled', false).addClass('active');
+      } else {
+        $('#acceptButton').prop('disabled', true).removeClass('active');
+      }
+    });
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,277 @@
+{% extends "base2.html" %}
+{% block title %}Problem 6{% endblock %}
+
+{% block content %}
+<form id="problem5-form" method="post" novalidate>
+    {% csrf_token %}
+    <div class="container">  
+        <br>
+        <h2>6. Find Duplicates</h2>
+        <div class="problem-statement">
+            <pre class="wrap"><h5><b>Problem Statement:</b></h5>Given an integer array, detect if it contains duplicate elements.
+Input Specification: 
+First line contains size N of the array.
+Next line contains N space separated integers giving the contents of the array.
+Output Format:
+Output YES or NO (followed by a newline).
+Variable Constraints:
+The array size is smaller than 50.
+Each array entry is an integer which fits an int data type.
+Example:
+Input:
+4
+34 13 42 13
+Output:
+YES
+Input:
+4
+11 2 18 22
+Output:
+NO</pre>
+        </div>
+        <p><pre class="wraptext"><h5><b>Incorrect Solution:</b></h5><code><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span>
+<span class="keyword">void</span> <span class="function">duplicate</span>(<span class="keyword">int</span> b[],<span class="keyword">int</span> m)
+{ 
+    <span class="keyword">int</span> k=0,x=0;
+    <span class="keyword">for</span>(<span class="keyword">int</span> k=0;k&lt;m;k++)
+        <span class="keyword">for</span>(<span class="keyword">int</span> j=1;j&lt;m;j++)
+            <span class="keyword">if</span>(b[k]==b[j] &amp;&amp; k!=j)
+                x++;
+    <span class="keyword">if</span>(x&gt;=2)
+        <span class="function">printf</span>(<span class="string">"YES"</span>);
+    <span class="keyword">else</span>
+        <span class="function">printf</span>(<span class="string">"NO"</span>);
+}
+<span class="keyword">int</span> <span class="function">main</span>()
+{
+    <span class="keyword">int</span> y;
+    <span class="function">scanf</span>(<span class="string">"%d"</span>,&amp;y);
+    <span class="keyword">int</span> a[y];
+    <span class="keyword">for</span>(<span class="keyword">int</span> i=0;i&lt;y;i++)
+        <span class="function">scanf</span>(<span class="string">"%d"</span>,&amp;a[i]);
+    <span class="function">duplicate</span>(a,y);
+    <span class="keyword">return</span> 0;
+}</code></pre></p>
+        <div class="form-group">
+            <b>{{ form.error_description_61.label_tag }}</b><br>
+            {{ form.error_description_61 }}
+        </div>
+        <div class="form-group">
+            <label for="understandability61"><b> {{ form.understandability61.label_tag }}</b> </label>
+            <div class="star-rating mt-3" data-feedback-id="61">
+                <span style="color: green; font-size: 0.9rem; position: relative; bottom: 0.25rem; font-weight: 600">Very Easy</span>
+                <span class="star {% if understandability.understandability61 >= 1 %}filled{% endif %}" data-value="1">&#9733;</span>
+                <span class="star {% if understandability.understandability61 >= 2 %}filled{% endif %}" data-value="2">&#9733;</span>
+                <span class="star {% if understandability.understandability61 >= 3 %}filled{% endif %}" data-value="3">&#9733;</span>
+                <span class="star {% if understandability.understandability61 >= 4 %}filled{% endif %}" data-value="4">&#9733;</span>
+                <span class="star {% if understandability.understandability61 >= 5 %}filled{% endif %}" data-value="5">&#9733;</span>
+                <span style="color: red; font-size: 0.9rem; position: relative; bottom: 0.25rem; font-weight: 600">Very Difficult</span>
+            </div>
+            <input type="hidden" name="understandability61" id="understandability61" value="{{ understandability.understandability61 }}">
+        </div> 
+        <div class="form-group">
+            <button type="button" id="show-feedback-btn6" class="btn btn-secondary">Show Feedback</button>
+        </div>
+        <div id="conditional-content6" class="hidden">
+            <div class="feedback">
+                <pre class="wrap">
+<h5><b>Feedback:</b></h5>{{ highest_rating_content }}</p></pre>
+{% comment %} <p><strong>Name:</strong> {{ highest_feedback_name }}</p> {% endcomment %}
+{% comment %} <p><strong>Content:</strong> {% endcomment %}
+            </div>
+                    
+            <div class="form-group">
+                <b>{{ form.error_description_62.label_tag }}</b><br>
+                {{ form.error_description_62 }}
+            </div>
+            <div class="form-group">
+                <label for="understandability62"><b> {{ form.understandability62.label_tag }}</b> </label>
+                <div class="star-rating mt-3" data-feedback-id="62">
+                    <span style="color: red; font-size: 0.9rem; position: relative; bottom: 0.25rem; font-weight: 600">Not Helpful</span>
+                    <span class="star {% if understandability.understandability62 >= 1 %}filled{% endif %}" data-value="1">&#9733;</span>
+                    <span class="star {% if understandability.understandability62 >= 2 %}filled{% endif %}" data-value="2">&#9733;</span>
+                    <span class="star {% if understandability.understandability62 >= 3 %}filled{% endif %}" data-value="3">&#9733;</span>
+                    <span class="star {% if understandability.understandability62 >= 4 %}filled{% endif %}" data-value="4">&#9733;</span>
+                    <span class="star {% if understandability.understandability62 >= 5 %}filled{% endif %}" data-value="5">&#9733;</span>
+                    <span style="color: green; font-size: 0.9rem; position: relative; bottom: 0.25rem; font-weight: 600">Very Helpful</span>
+                </div>
+                <input type="hidden" name="understandability62" id="understandability62" value="{{ understandability.understandability62 }}">
+            </div>
+        </div>
+    </div> 
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" id="submit-btn" class="btn btn-primary">Save & Next</button>
+        </div>
+    </div> 
+</form>
+
+<nav aria-label="Page navigation example" class="mt-4">
+    <ul class="pagination justify-content-center">
+        <li class="page-item {% if 1 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem1' 1 %}">1</a>
+        </li>
+        <li class="page-item {% if 2 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem2' 2 %}">2</a>
+        </li>
+        <li class="page-item {% if 3 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem3' 3 %}">3</a>
+        </li>
+        <li class="page-item {% if 4 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem4' 4 %}">4</a>
+        </li>
+        <li class="page-item {% if 5 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem5' 5 %}">5</a>
+        </li>
+        <li class="page-item {% if 6 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem6' 6 %}">6</a>
+        </li>
+        <li class="page-item {% if 7 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem7' 7 %}">7</a>
+        </li>
+    </ul>
+</nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const showFeedbackBtn = document.getElementById('show-feedback-btn6');
+        showFeedbackBtn.disabled = true;
+
+        function checkFeedbackButtonState() {
+            const storedUnderstandability = localStorage.getItem('understandability61');
+            const storedErrorDescription61 = localStorage.getItem('error_description_61');
+
+            if (storedUnderstandability && storedErrorDescription61) {
+                showFeedbackBtn.disabled = false;  
+            } else {
+                showFeedbackBtn.disabled = true; 
+            }
+        }
+
+        checkFeedbackButtonState();
+
+        document.querySelectorAll('.star-rating').forEach(starRatingDiv => {
+            const feedbackId = starRatingDiv.getAttribute('data-feedback-id');
+            const hiddenInput = document.querySelector(`input[name='understandability${feedbackId}']`);
+
+            const stars = starRatingDiv.querySelectorAll('.star');
+
+            const storedRating = localStorage.getItem(`understandability${feedbackId}`);
+            if (storedRating) {
+                hiddenInput.value = storedRating;
+
+                stars.forEach((star, index) => {
+                    if (index < storedRating) {
+                        star.classList.add('filled');
+                    }
+                });
+            }
+
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const value = star.getAttribute('data-value');
+
+                    stars.forEach(s => s.classList.remove('filled'));
+
+                    for (let i = 0; i < value; i++) {
+                        stars[i].classList.add('filled');
+                    }
+
+                    hiddenInput.value = value;
+                    localStorage.setItem(`understandability${feedbackId}`, value);
+                    
+                    if (feedbackId === '61') {
+                        checkFeedbackButtonState();
+                    }
+                });
+            });
+        });
+
+        const errorDescription61Radios = document.querySelectorAll('input[name="error_description_61"]');
+        const storedRadioValue61 = localStorage.getItem('error_description_61');
+        if (storedRadioValue61) {
+            errorDescription61Radios.forEach(radio => {
+                if (radio.value === storedRadioValue61) {
+                    radio.checked = true;
+                }
+            });
+        }
+
+        errorDescription61Radios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.checked) {
+                    localStorage.setItem('error_description_61', radio.value);
+                    checkFeedbackButtonState(); 
+                }
+            });
+        });
+
+        const errorDescription62Radios = document.querySelectorAll('input[name="error_description_62"]');
+        const storedRadioValue62 = localStorage.getItem('error_description_62');
+        if (storedRadioValue62) {
+            errorDescription62Radios.forEach(radio => {
+                if (radio.value === storedRadioValue62) {
+                    radio.checked = true;
+                }
+            });
+        }
+
+        errorDescription62Radios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.checked) {
+                    localStorage.setItem('error_description_62', radio.value);
+                }
+            });
+        });
+
+        const submitBtn = document.getElementById('submit-btn');
+        submitBtn.addEventListener('click', (e) => {
+            const requiredFields = document.querySelectorAll('input[type="hidden"]');
+            let allFilled = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value || field.value === "" || field.value == "0") {
+                    allFilled = false;
+                }
+            }); 
+
+            const errorDescription61Selected = document.querySelector('input[name="error_description_61"]:checked');
+            const errorDescription62Selected = document.querySelector('input[name="error_description_62"]:checked');
+
+            if (!allFilled || !errorDescription61Selected || !errorDescription62Selected) {
+                e.preventDefault();
+                alert('Please answer all the questions (including those revealed when you click the Show Feedback button) before proceeding.');
+            }
+        });
+
+        window.history.pushState(null, document.title, window.location.href);
+        window.addEventListener('popstate', function(event) {
+            alert("This action is not allowed. Please use the navigation buttons provided.");
+            window.history.pushState(null, document.title, window.location.href);
+        });
+    });
+</script>
+
+
+
+<style>
+    
+    .star-rating .star {
+        font-size: 30px; 
+        color: #ddd; 
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+    
+    .mt-3, .my-3 {
+        margin-top: 1rem !important;
+        text-align: center;
+    }
+    
+    .star-rating .star.filled {
+        color: #ffc107; 
+    }
+    
+</style>
+
+{% endblock %}

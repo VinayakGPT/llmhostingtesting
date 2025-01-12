@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Teaching Assistant Overview{% endblock %}
+
+{% block content %}
+<style>
+    .info-container {
+        max-width: 800px;
+        margin: auto;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+    }
+    .info-section {
+        margin-bottom: 2rem;
+    }
+    .info-section h2 {
+        color: #333;
+        font-weight: bold;
+    }
+    .info-section p {
+        font-size: 1.1rem;
+        color: #555;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="info-container">
+        <div class="info-section">
+            <h2>Your Role in the Study</h2>
+            <p>There are 6 C programming problems. For each problem, you will be shown the problem description, program(s) containing logical error(s) and multiple feedback generated through different methods to reveal the error(s) in the program. <br><br>
+
+                Imagine you are a Teaching Assistant (TA) in an introductory programming course and a student wrote this program for the given programming problem. The student cannot identify the error in the program and seeks your help. You need to identify the best feedback out of the multiple feedbacks that can reveal the logical error in the given program.  </p>
+        </div>
+        <a href="{% url 'taproblem1' 1%}" class="btn btn-primary">Continue</a>
+    </div>
+</div>
+{% endblock %}

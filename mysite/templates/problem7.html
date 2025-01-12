@@ -1,0 +1,321 @@
+{% extends "base2.html" %}
+{% block title %}Problem 7{% endblock %}
+
+{% block content %}
+<form id="problem7-form" method="post" novalidate>
+    {% csrf_token %}
+    <div class="container">
+        <br> 
+        <h2>7. Recursive Pattern</h2>
+        <div class="problem-statement">
+            <pre class="wrap"><h5><b>Problem Statement:</b></h5>Given a positive number n, you need to give as an output the following pattern. You need to use recursion. No marks if loops are used.
+Example 1:
+Input: 11
+Output: 11 6 1 -4 1 6 11
+Example 2:
+Input: 15
+Output: 15 10 5 0 5 10 15</pre>
+        </div>
+        <p><pre class="wraptext">
+            <h5><b>Incorrect Solution:</b></h5><code><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span>
+<span class="keyword">int</span> <span class="function">viper</span>(<span class="keyword">int</span> b) {
+    <span class="function">printf</span>(<span class="string">"%d "</span>, b);
+    <span class="keyword">if</span>(b < 0) <span class="keyword">return</span> b;
+    b = b - 5;
+    <span class="keyword">return</span> <span class="function">viper</span>(b);
+}
+<span class="keyword">int</span> <span class="function">mountain</span>(<span class="keyword">int</span> n, <span class="keyword">int</span> b) {
+    b = b + 5;
+    <span class="function">printf</span>(<span class="string">"%d "</span>, b);
+    <span class="keyword">if</span>(b == n) <span class="keyword">return</span> 0;
+    <span class="keyword">return</span> <span class="function">mountain</span>(n, b);
+}
+<span class="keyword">int</span> <span class="function">main</span>() {
+    <span class="keyword">int</span> n, b;
+    <span class="function">scanf</span>(<span class="string">"%d"</span>, &n);
+    b = <span class="function">viper</span>(n);
+    <span class="function">mountain</span>(n, b);
+    <span class="keyword">return</span> 0;
+}
+</code></pre></p>
+        <div class="form-group">
+            <b>{{ form.error_description_71.label_tag }}</b><br>
+            {{ form.error_description_71 }}
+        </div>
+        <div class="form-group">
+            <label for="understandability71"><b> {{ form.understandability71.label_tag }}</b> </label>
+            <div class="star-rating mt-3" data-feedback-id="71">
+                <span style="color: green; font-size: 0.9rem; position: relative; bottom: 0.25rem; font-weight: 600">Very Easy</span>
+                <span class="star {% if understandability.understandability71 >= 1 %}filled{% endif %}" data-value="1">&#9733;</span>
+                <span class="star {% if understandability.understandability71 >= 2 %}filled{% endif %}" data-value="2">&#9733;</span>
+                <span class="star {% if understandability.understandability71 >= 3 %}filled{% endif %}" data-value="3">&#9733;</span>
+                <span class="star {% if understandability.understandability71 >= 4 %}filled{% endif %}" data-value="4">&#9733;</span>
+                <span class="star {% if understandability.understandability71 >= 5 %}filled{% endif %}" data-value="5">&#9733;</span>
+                <span style="color: red; font-size: 0.9rem; position: relative; bottom: 0.25rem; font-weight: 600">Very Difficult</span>
+            </div>
+            <input type="hidden" name="understandability71" id="understandability71" value="{{ understandability.understandability71 }}">
+        </div>
+        <div class="form-group">
+            <button type="button" id="show-feedback-btn7" class="btn btn-secondary">Show Feedback</button>
+        </div>
+        <div id="conditional-content7" class="hidden">
+            <div class="feedback">
+                <pre class="wrap">
+<h5><b>Feedback:</b></h5>{{ highest_rating_content }}</p></pre>
+{% comment %} <p><strong>Name:</strong> {{ highest_feedback_name }}</p> {% endcomment %}
+{% comment %} <p><strong>Content:</strong> {% endcomment %}
+            </div>
+                    
+            <div class="form-group">
+                <b>{{ form.error_description_72.label_tag }}</b><br>
+                {{ form.error_description_72 }}
+            </div>
+            <div class="form-group">
+                <label for="understandability72"><b> {{ form.understandability72.label_tag }}</b> </label>
+                <div class="star-rating mt-3" data-feedback-id="72">
+                    <span style="color: red; font-size: 0.9rem; position: relative; bottom: 0.25rem; font-weight: 600">Not Helpful</span>
+                    <span class="star {% if understandability.understandability72 >= 1 %}filled{% endif %}" data-value="1">&#9733;</span>
+                    <span class="star {% if understandability.understandability72 >= 2 %}filled{% endif %}" data-value="2">&#9733;</span>
+                    <span class="star {% if understandability.understandability72 >= 3 %}filled{% endif %}" data-value="3">&#9733;</span>
+                    <span class="star {% if understandability.understandability72 >= 4 %}filled{% endif %}" data-value="4">&#9733;</span>
+                    <span class="star {% if understandability.understandability72 >= 5 %}filled{% endif %}" data-value="5">&#9733;</span>
+                    <span style="color: green; font-size: 0.9rem; position: relative; bottom: 0.25rem; font-weight: 600">Very Helpful</span>
+                </div>
+                <input type="hidden" name="understandability72" id="understandability72" value="{{ understandability.understandability72 }}">
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" id="submit-btn" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+</form> 
+
+<div id="confirmModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Submission</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>You cannot edit your response after submission. Do you want to submit?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cancelSubmit">No</button>
+                <button type="button" class="btn btn-primary" id="confirmSubmit">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<nav aria-label="Page navigation example" class="mt-4">
+    <ul class="pagination justify-content-center">
+        <li class="page-item {% if 1 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem1' 1 %}">1</a>
+        </li>
+        <li class="page-item {% if 2 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem2' 2 %}">2</a>
+        </li>
+        <li class="page-item {% if 3 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem3' 3 %}">3</a>
+        </li>
+        <li class="page-item {% if 4 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem4' 4 %}">4</a>
+        </li>
+        <li class="page-item {% if 5 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem5' 5 %}">5</a>
+        </li>
+        <li class="page-item {% if 6 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem6' 6 %}">6</a>
+        </li>
+        <li class="page-item {% if 7 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem7' 7 %}">7</a>
+        </li>
+    </ul>
+</nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Disable the show feedback button initially
+        const showFeedbackBtn = document.getElementById('show-feedback-btn7');
+        showFeedbackBtn.disabled = true;
+
+        // Function to check if the feedback button should be enabled or disabled
+        function checkFeedbackButtonState() {
+            const storedUnderstandability71 = localStorage.getItem('understandability71');
+            const storedErrorDescription71 = localStorage.getItem('error_description_71');
+
+            // Enable the button if both values exist
+            showFeedbackBtn.disabled = !(storedUnderstandability71 && storedErrorDescription71);
+        }
+
+        // Initial check for button state on page load
+        checkFeedbackButtonState();
+
+        // Star rating functionality
+        document.querySelectorAll('.star-rating').forEach(starRatingDiv => {
+            const feedbackId = starRatingDiv.getAttribute('data-feedback-id');
+            const hiddenInput = document.querySelector(`input[name='understandability${feedbackId}']`);
+
+            const stars = starRatingDiv.querySelectorAll('.star');
+
+            // Load the value from local storage if it exists
+            const storedRating = localStorage.getItem(`understandability${feedbackId}`);
+            if (storedRating) {
+                hiddenInput.value = storedRating;
+            }
+
+            const currentRating = hiddenInput.value;
+
+            // Fill stars based on the current rating
+            stars.forEach((star, index) => {
+                if (index < currentRating) {
+                    star.classList.add('filled');
+                }
+            });
+
+            // Make stars editable by clicking
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const value = star.getAttribute('data-value');
+
+                    // Reset all stars
+                    stars.forEach(s => s.classList.remove('filled'));
+
+                    // Fill all stars up to the clicked one
+                    for (let i = 0; i < value; i++) {
+                        stars[i].classList.add('filled');
+                    }
+
+                    // Update hidden input value
+                    hiddenInput.value = value;
+                    localStorage.setItem(`understandability${feedbackId}`, value);
+
+                    // Check button state in case understandability71 is clicked
+                    if (feedbackId === '71') {
+                        checkFeedbackButtonState();
+                    }
+                });
+            });
+        });
+
+        // Load and save radio button selection for error_description_71
+        const errorDescription71Radios = document.querySelectorAll('input[name="error_description_71"]');
+        const storedRadioValue71 = localStorage.getItem('error_description_71');
+        if (storedRadioValue71) {
+            errorDescription71Radios.forEach(radio => {
+                if (radio.value === storedRadioValue71) {
+                    radio.checked = true;
+                }
+            });
+        }
+        errorDescription71Radios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.checked) {
+                    localStorage.setItem('error_description_71', radio.value);
+                    checkFeedbackButtonState();  // Check button state after interaction
+                }
+            });
+        });
+
+        // Load and save radio button selection for error_description_72
+        const errorDescription72Radios = document.querySelectorAll('input[name="error_description_72"]');
+        const storedRadioValue72 = localStorage.getItem('error_description_72');
+        if (storedRadioValue72) {
+            errorDescription72Radios.forEach(radio => {
+                if (radio.value === storedRadioValue72) {
+                    radio.checked = true;
+                }
+            });
+        }
+        errorDescription72Radios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.checked) {
+                    localStorage.setItem('error_description_72', radio.value);
+                }
+            });
+        });
+
+        // Form validation and modal trigger
+        const submitBtn = document.getElementById('submit-btn');
+        const confirmSubmitBtn = document.getElementById('confirmSubmit');
+        const cancelSubmitBtn = document.getElementById('cancelSubmit');
+        const modal = document.getElementById('confirmModal');
+        let formIsValid = false;
+
+        // Show the confirmation modal when submit button is clicked
+        submitBtn.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent immediate submission
+
+            // Perform form validation
+            const requiredFields = document.querySelectorAll('input[type="hidden"]');
+            let allFilled = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value || field.value === "" || field.value == "0") {
+                    allFilled = false;
+                }
+            });
+
+            const errorDescription71Selected = document.querySelector('input[name="error_description_71"]:checked');
+            const errorDescription72Selected = document.querySelector('input[name="error_description_72"]:checked');
+
+            if (!allFilled || !errorDescription71Selected || !errorDescription72Selected) {
+                alert('Please answer all the questions (including those revealed when you click the Show Feedback button) before proceeding.');
+            } else {
+                // If all fields are filled, show the confirmation modal
+                formIsValid = true;
+                $(modal).modal('show'); // Show Bootstrap modal
+            }
+        }); 
+
+        // If the user confirms, submit the form
+        confirmSubmitBtn.addEventListener('click', () => {
+            if (formIsValid) {
+                // Clear local storage
+                localStorage.clear();
+                // Submit the form (assuming the form has id 'myForm')
+                document.getElementById('problem7-form').submit();
+            }
+        });
+
+        // If the user cancels, just hide the modal
+        cancelSubmitBtn.addEventListener('click', () => {
+            $(modal).modal('hide'); // Hide Bootstrap modal
+        });
+
+        // Disable back button behavior
+        window.history.pushState(null, document.title, window.location.href);
+        window.addEventListener('popstate', function(event) {
+            alert("This action is not allowed. Please use the navigation buttons provided.");
+            window.history.pushState(null, document.title, window.location.href);
+        });
+    });
+</script>
+
+
+<style> 
+    
+    .star-rating .star {
+        font-size: 30px; 
+        color: #ddd; 
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+    
+    .mt-3, .my-3 {
+        margin-top: 1rem !important;
+        text-align: center;
+    }
+    
+    .star-rating .star.filled {
+        color: #ffc107; 
+    }
+    
+</style>
+
+{% endblock %}

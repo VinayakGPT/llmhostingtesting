@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Contact Us{% endblock %}
+{% load static %}
+{% block content %}
+
+<section class="contact py-5">
+    <div class="container">
+        <h1 class="text-center mb-4"> <b>Meet Our Team</b></h1>
+        <p class="text-center mb-5">We're here to help! Reach out to us for assistance or questions.</p>
+        
+        <div class="row">
+            <div class="col-md-4 text-center mb-4">
+                <h4>Dr. Amey Karkare</h4>
+                <p>Professor <br> Department of Computer Science & Engineering <br> Indian Institute of Technology <br> Kanpur </p>
+                <p><a href="mailto:karkare@iitk.ac.in">karkare@iitk.ac.in</a></p>
+            </div>
+
+            <div class="col-md-4 text-center mb-4">
+                <h4>Nimisha Agarwal</h4>
+                <p>PhD Scholar <br> Department of Computer Science & Engineering <br> Indian Institute of Technology <br> Kanpur</p>
+                <p><a href="mailto:nimisha@cse.iitk.ac.in">nimisha@cse.iitk.ac.in</a></p>
+            </div>
+
+            <div class="col-md-4 text-center mb-4">
+                <h4>Vinayak Gupta</h4>
+                <p>Student <br> Department of Computer Science & Engineering <br> Indian Institute of Information Technology <br> Nagpur</p>
+                <p><a href="mailto:bt22cse222@iiitn.ac.in">bt22cse222@iiitn.ac.in</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .contact {
+        background-color: #f9f9f9;
+        padding: 50px 0;
+    }
+
+    .contact h4 {
+        font-weight: 600;
+    }
+
+    .contact p {
+        color: #666;
+    }
+    .contact img {
+        border: 4px solid #ddd;
+        transition: transform 0.3s;
+    }
+    .contact img:hover {
+        transform: scale(1.1);
+    }
+    .contact a {
+        color: #007bff;
+        text-decoration: none;
+    }
+    .contact a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}

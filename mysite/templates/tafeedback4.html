@@ -1,0 +1,145 @@
+{% extends "base2.html" %}
+{% load widget_tweaks %}
+{% block title %}Problem 4{% endblock %}
+
+{% block content %}
+<form id="tafeedback4-form" method="post" novalidate onsubmit="return validateForm()">
+    {% csrf_token %}
+    <div class="container">
+        <br>
+        <div id="elapsed-time-container" style="position: sticky; top: 0; background-color: white; z-index: 1000; border-bottom: 2px solid #ccc;">
+            <div style="display: flex; justify-content: flex-end; align-items: center;">
+                <label for="stopwatch4" style="font-weight: bold; margin-right: 5px; position: relative; top: 3px;">Elapsed Time:</label>
+                <span id="stopwatch4" style="font-family: monospace; font-size: 18px;">00:00:00</span>
+            </div>
+        </div>
+        <input type="hidden" id="elapsed_time4" name="elapsed_time4" value="{{ saved_elapsed_time }}">
+        <br>
+        <h2> 4. Smallest Prime: Type-1</h2>
+        <div class="problem-statement">
+            <pre class="wrap"><h5><b>Problem Statement:</b></h5>Given a positive integer N, print the number p, such that p is the smallest prime number greater than or equal to N.
+Example:
+Input: 11
+Output: 11
+Input: 22
+Output: 23 
+Input: 1
+Output: 2</pre>
+        </div>
+        <p><pre class="wraptext"><h5><b>Incorrect Solution:</b></h5><code><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span>
+<span class="keyword">int</span> <span class="function">check_prime</span>(<span class="keyword">int</span> num) {
+    <span class="keyword">int</span> j = 2;
+    <span class="keyword">while</span> (j <= num - 1) {
+        <span class="keyword">if</span> (num % j == 0)
+            <span class="keyword">return</span> 0;
+        j = j + 1;
+    }
+    <span class="keyword">return</span> 1;
+}
+<span class="keyword">int</span> <span class="function">main</span>() {
+    <span class="keyword">int</span> N, i;
+    <span class="function">scanf</span>(<span class="string">"%d"</span>, &N);
+    i = N;
+    <span class="keyword">while</span> (i >= N) {
+        <span class="keyword">if</span> (<span class="function">check_prime</span>(i))
+            <span class="keyword">break</span>;
+        i = i + 1;
+    }
+    <span class="function">printf</span>(<span class="string">"%d"</span>, i);
+    <span class="keyword">return</span> 0;
+}</code></pre></p>
+  
+        <div class="form-group">
+            {{ form.ta_feedback4.label_tag }}<br>
+            {{ form.ta_feedback4|attr:"class:styled-textbox" }}
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">Next</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<nav aria-label="Page navigation example" class="mt-4">
+    <ul class="pagination justify-content-center">
+        <li class="page-item {% if 1 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'tafeedback1' 1 %}">1</a>
+        </li>
+        <li class="page-item {% if 2 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'tafeedback2' 2 %}">2</a>
+        </li>
+        <li class="page-item {% if 3 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'tafeedback3' 3 %}">3</a>
+        </li>
+        <li class="page-item {% if 4 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'tafeedback4' 4 %}">4</a>
+        </li>
+        <li class="page-item {% if 5 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'tafeedback5' 5 %}">5</a>
+        </li>
+        <li class="page-item {% if 6 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'tafeedback6' 6 %}">6</a>
+        </li>
+        <li class="page-item {% if 7 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'tafeedback7' 7 %}">7</a>
+        </li>
+    </ul>
+</nav>
+
+
+
+<script>
+    function validateForm() {
+        let feedback = document.querySelector('#id_ta_feedback4').value.trim();
+        
+        if (!feedback) {
+            alert("Please enter feedback before proceeding.");
+            return false;
+        }
+
+        return true; 
+    }
+    
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const feedbackInput = document.querySelector('#id_ta_feedback4');
+        const elapsedInput = document.getElementById('elapsed_time4');
+        const stopwatchElement = document.getElementById('stopwatch4');
+        
+        let savedFeedback = localStorage.getItem('ta_feedback4') || '';
+        let savedElapsedTime = localStorage.getItem('elapsed_time4') || 0;
+    
+        feedbackInput.value = savedFeedback;
+        
+        let startTime = Date.now() - (savedElapsedTime * 1000);
+    
+        function updateStopwatch() {
+            let elapsedTime = Date.now() - startTime;  
+            let secondsElapsed = Math.floor(elapsedTime / 1000); 
+            let hours = Math.floor(secondsElapsed / 3600);
+            let minutes = Math.floor((secondsElapsed % 3600) / 60);
+            let seconds = secondsElapsed % 60;
+    
+            stopwatchElement.textContent = 
+                `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            
+            localStorage.setItem('elapsed_time4', secondsElapsed);
+    
+            elapsedInput.value = secondsElapsed;
+        }
+     
+        feedbackInput.addEventListener('input', function() {
+            localStorage.setItem('ta_feedback4', feedbackInput.value);
+        });
+    
+        setInterval(updateStopwatch, 1000);
+        
+        window.history.pushState(null, document.title, window.location.href);
+        window.addEventListener('popstate', function(event) {
+            alert("This action is not allowed. Please use the navigation buttons provided.");
+            window.history.pushState(null, document.title, window.location.href);
+        });
+    });
+</script>
+
+{% endblock %}

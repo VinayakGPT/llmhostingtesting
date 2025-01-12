@@ -1,0 +1,275 @@
+{% extends "base2.html" %}
+{% block title %}Problem 1{% endblock %}
+
+{% block content %}
+<form id="problem1-form" method="post" novalidate>
+    {% csrf_token %}  
+    <div class="container">
+        <br>
+        <h2>1. Tetrahedral</h2>
+        <div class="problem-statement"><pre class="wrap"><h5><b>Problem Statement:</b></h5>Given an input N (N>0), your program should output the Nth tetrahedral number. To calculate the nth tetrahedral number, T(n), the formula is as follows:
+T(n) = (1) + (1+2) + (1+2+3) + (1+2+3+4) + ... + (1+2+3+4+...+n)
+Example:
+Input:
+2
+Output:
+4
+Input:
+5
+Output:
+35</pre>
+        </div>
+        <p><pre class="wraptext"><h5><b>Incorrect Solution:</b></h5><code><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span>
+<span class="keyword">int</span> <span class="function">main</span>() {
+    <span class="keyword">int</span> n;
+    <span class="function">scanf</span>(<span class="string">"%d"</span>, &n);
+    <span class="keyword">int</span> sum = 0, i, s;
+    <span class="keyword">for</span>(i = 0; i < n; i++) {
+        s = i * (i + 1) / 2;
+        sum = sum + s;
+    }
+    <span class="function">printf</span>(<span class="string">"%d"</span>, s);
+    <span class="keyword">return</span> 0;
+}</code></pre></p>
+        <div class="form-group">
+            <b> {{ form.error_description_11.label_tag }} </b> <br>
+            {{ form.error_description_11 }}
+        </div>
+        <div class="form-group"> 
+            <label for="understandability11"><b> {{ form.understandability11.label_tag }} </b></label>
+            <div class="star-rating mt-3" data-feedback-id="11">
+                <span style="color: green; font-size: 0.9rem; position: relative; bottom: 0.25rem; font-weight: 600">Very Easy</span>
+                <span class="star {% if understandability.understandability11 >= 1 %}filled{% endif %}" data-value="1">&#9733;</span>
+                <span class="star {% if understandability.understandability11 >= 2 %}filled{% endif %}" data-value="2">&#9733;</span>
+                <span class="star {% if understandability.understandability11 >= 3 %}filled{% endif %}" data-value="3">&#9733;</span>
+                <span class="star {% if understandability.understandability11 >= 4 %}filled{% endif %}" data-value="4">&#9733;</span>
+                <span class="star {% if understandability.understandability11 >= 5 %}filled{% endif %}" data-value="5">&#9733;</span>
+                <span style="color: red; font-size: 0.9rem; position: relative; bottom: 0.25rem; font-weight: 600">Very Hard</span>
+            </div>
+            <input type="hidden" name="understandability11" id="understandability11" value="{{ understandability.understandability11 }}">
+        </div>
+        
+        <div class="form-group">
+            <button type="button" id="show-feedback-btn1" class="btn btn-secondary">Show Feedback</button>
+        </div>
+
+        <div id="conditional-content1" class="hidden">
+            <div class="feedback">
+                <pre class="wrap">
+<h5><b>Feedback:</b></h5>{{ highest_rating_content }}</p></pre>
+{% comment %} <p><strong>Name:</strong> {{ highest_feedback_name }}</p> {% endcomment %}
+{% comment %} <p><strong>Content:</strong> {% endcomment %}
+            </div>
+            <div class="form-group">
+                <b>{{ form.error_description_12.label_tag }}</b><br>
+                {{ form.error_description_12 }} 
+            </div>
+            <div class="form-group">
+                <label for="understandability12"> <b>{{ form.understandability12.label_tag }} </b></label>
+                <div class="star-rating mt-3" data-feedback-id="12">
+                    <span style="color: red; font-size: 0.9rem; position: relative; bottom: 0.25rem; font-weight: 600">Not Helpful</span>
+                    <span class="star {% if understandability.understandability12 >= 1 %}filled{% endif %}" data-value="1">&#9733;</span>
+                    <span class="star {% if understandability.understandability12 >= 2 %}filled{% endif %}" data-value="2">&#9733;</span>
+                    <span class="star {% if understandability.understandability12 >= 3 %}filled{% endif %}" data-value="3">&#9733;</span>
+                    <span class="star {% if understandability.understandability12 >= 4 %}filled{% endif %}" data-value="4">&#9733;</span>
+                    <span class="star {% if understandability.understandability12 >= 5 %}filled{% endif %}" data-value="5">&#9733;</span>
+                    <span style="color: green; font-size: 0.9rem; position: relative; bottom: 0.25rem; font-weight: 600">Very Helpful</span>
+                </div>
+                <input type="hidden" name="understandability12" id="understandability12" value="{{ understandability.understandability12 }}">
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" id="submit-btn" class="btn btn-primary">Save & Next</button>
+        </div>
+    </div>
+</form>
+
+<nav aria-label="Page navigation example" class="mt-4">
+    <ul class="pagination justify-content-center">
+        <li class="page-item {% if 1 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem1' 1 %}">1</a>
+        </li>
+        <li class="page-item {% if 2 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem2' 2 %}">2</a>
+        </li>
+        <li class="page-item {% if 3 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem3' 3 %}">3</a>
+        </li>
+        <li class="page-item {% if 4 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem4' 4 %}">4</a>
+        </li>
+        <li class="page-item {% if 5 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem5' 5 %}">5</a>
+        </li>
+        <li class="page-item {% if 6 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem6' 6 %}">6</a>
+        </li>
+        <li class="page-item {% if 7 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem7' 7 %}">7</a>
+        </li>
+    </ul>
+</nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Disable the show feedback button initially
+        const showFeedbackBtn = document.getElementById('show-feedback-btn1');
+        showFeedbackBtn.disabled = true;
+
+        // Function to check if feedback button should be enabled or disabled
+        function checkFeedbackButtonState() {
+            const storedUnderstandability = localStorage.getItem('understandability11');
+            const storedErrorDescription11 = localStorage.getItem('error_description_11');
+
+            if (storedUnderstandability && storedErrorDescription11) {
+                showFeedbackBtn.disabled = false;  // Enable button when both values are available
+            } else {
+                showFeedbackBtn.disabled = true;  // Disable button otherwise
+            }
+        }
+
+        // Initial check for button state on page load
+        checkFeedbackButtonState();
+
+        // Star rating functionality
+        document.querySelectorAll('.star-rating').forEach(starRatingDiv => {
+            const feedbackId = starRatingDiv.getAttribute('data-feedback-id');
+            const hiddenInput = document.querySelector(`input[name='understandability${feedbackId}']`);
+
+            const stars = starRatingDiv.querySelectorAll('.star');
+            
+            // Load stored rating from local storage
+            const storedRating = localStorage.getItem(`understandability${feedbackId}`);
+            if (storedRating) {
+                hiddenInput.value = storedRating;
+
+                // Initially fill stars based on the stored rating
+                stars.forEach((star, index) => {
+                    if (index < storedRating) {
+                        star.classList.add('filled');
+                    }
+                });
+            }
+
+            // Make stars editable by clicking
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const value = star.getAttribute('data-value');
+
+                    // Reset all stars
+                    stars.forEach(s => s.classList.remove('filled'));
+
+                    // Fill all stars up to the clicked one
+                    for (let i = 0; i < value; i++) {
+                        stars[i].classList.add('filled');
+                    }
+
+                    // Update hidden input value and save it to local storage
+                    hiddenInput.value = value;
+                    localStorage.setItem(`understandability${feedbackId}`, value);
+                    
+                    // Check button state in case understandability11 is clicked
+                    if (feedbackId === '11') {
+                        checkFeedbackButtonState();
+                    }
+                });
+            });
+        });
+
+        // Load radio button selection for error_description_11 from local storage
+        const errorDescription11Radios = document.querySelectorAll('input[name="error_description_11"]');
+        const storedRadioValue11 = localStorage.getItem('error_description_11');
+        if (storedRadioValue11) {
+            errorDescription11Radios.forEach(radio => {
+                if (radio.value === storedRadioValue11) {
+                    radio.checked = true;
+                }
+            });
+        }
+
+        // Save radio button selection for error_description_11 to local storage on change
+        errorDescription11Radios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.checked) {
+                    localStorage.setItem('error_description_11', radio.value);
+                    checkFeedbackButtonState();  // Check button state after interaction
+                }
+            });
+        });
+
+        // Load radio button selection for error_description_12 from local storage
+        const errorDescription12Radios = document.querySelectorAll('input[name="error_description_12"]');
+        const storedRadioValue12 = localStorage.getItem('error_description_12');
+        if (storedRadioValue12) {
+            errorDescription12Radios.forEach(radio => {
+                if (radio.value === storedRadioValue12) {
+                    radio.checked = true;
+                }
+            });
+        }
+
+        // Save radio button selection for error_description_12 to local storage on change
+        errorDescription12Radios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.checked) {
+                    localStorage.setItem('error_description_12', radio.value);
+                }
+            });
+        });
+
+        // Form validation check
+        const submitBtn = document.getElementById('submit-btn');
+        submitBtn.addEventListener('click', (e) => {
+            const requiredFields = document.querySelectorAll('input[type="hidden"]');
+            let allFilled = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value || field.value === "" || field.value == "0") {
+                    allFilled = false;
+                }
+            });
+
+            const errorDescription11Selected = document.querySelector('input[name="error_description_11"]:checked');
+            const errorDescription12Selected = document.querySelector('input[name="error_description_12"]:checked');
+
+            if (!allFilled || !errorDescription11Selected || !errorDescription12Selected) {
+                e.preventDefault();
+                alert('Please answer all the questions (including those revealed when you click the Show Feedback button) before proceeding.');
+            }
+        });
+
+        // Handle back button prevention
+        window.history.pushState(null, document.title, window.location.href);
+        window.addEventListener('popstate', function(event) {
+            alert("This action is not allowed. Please use the navigation buttons provided.");
+            // Push state again to maintain the current state
+            window.history.pushState(null, document.title, window.location.href);
+        });
+    }); 
+</script>
+
+
+
+<style>
+    
+    .star-rating .star {
+        font-size: 30px; 
+        color: #ddd; 
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+    
+    .mt-3, .my-3 {
+        margin-top: 1rem !important;
+        text-align: center;
+    }
+    
+    .star-rating .star.filled {
+        color: #ffc107; 
+    }
+    
+</style>
+
+{% endblock %}

@@ -1,0 +1,154 @@
+{% extends "base2.html" %}
+{% load widget_tweaks %}
+{% block title %}Problem 2{% endblock %}
+
+{% block content %}
+<form id="tafeedback2-form" method="post" novalidate onsubmit="return validateForm()">
+    {% csrf_token %}
+    <div class="container">
+        <br>
+        <div id="elapsed-time-container" style="position: sticky; top: 0; background-color: white; z-index: 1000; border-bottom: 2px solid #ccc;">
+            <div style="display: flex; justify-content: flex-end; align-items: center;">
+                <label for="stopwatch2" style="font-weight: bold; margin-right: 5px; position: relative; top: 3px;">Elapsed Time:</label>
+                <span id="stopwatch2" style="font-family: monospace; font-size: 18px;">00:00:00</span>
+            </div>
+        </div>
+        <input type="hidden" id="elapsed_time2" name="elapsed_time2" value="{{ saved_elapsed_time }}">
+        <br>
+        <h2> 2. Triangle Type</h2>
+        <div class="problem-statement">
+            <pre class="wrap"><h5><b>Problem Statement: </b></h5>You would be given three integers as input which corresponds to the three sides of a triangle. Write a program determine if the triangle is acute, right or obtuse. You should print "Invalid Triangle" if the side combinations not correspond to a valid triangle.
+Example:
+Input:
+3 5 4
+Output:
+Right Triangle</pre>
+        </div>
+
+        <p><pre class="wraptext"><h5><b>Incorrect Solution:</b></h5><code><span class="keyword">#include</span><span class="string">&lt;stdio.h&gt;</span>
+<span class="keyword">int</span> <span class="function">main</span>() {
+    <span class="keyword">int</span> a, b, c, temp;
+    scanf(<span class="string">"%d %d %d"</span>, &a, &b, &c);
+
+    <span class="keyword">while</span>(!((a &lt;= b) &amp;&amp; (b &lt;= c))) {
+        <span class="keyword">if</span>(b &lt; a) {
+            temp = a;
+            a = b;
+            b = temp;
+        }
+        <span class="keyword">if</span>(c &lt; b) {
+            temp = b;
+            b = c;
+            c = temp;
+        }
+    }
+    <span class="keyword">if</span>((a + b) &lt; c) {
+        printf(<span class="string">"Invalid Triangle"</span>);
+    } <span class="keyword">else</span> {
+        <span class="keyword">if</span>((a * a + b * b) &gt; (c * c)) {
+            printf(<span class="string">"Acute Triangle"</span>);
+        } <span class="keyword">else</span> <span class="keyword">if</span>((a * a + b * b) == (c * c)) {
+            printf(<span class="string">"Right Triangle"</span>);
+        } <span class="keyword">else</span> {
+            printf(<span class="string">"Obtuse Triangle"</span>);
+        }
+    }
+    <span class="keyword">return</span> 0;
+}</code></pre></p>
+ 
+ 
+        <div class="form-group">
+            {{ form.ta_feedback2.label_tag }}<br>
+            {{ form.ta_feedback2|attr:"class:styled-textbox" }}
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">Next</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<nav aria-label="Page navigation example" class="mt-4">
+    <ul class="pagination justify-content-center">
+        <li class="page-item {% if 1 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'tafeedback1' 1 %}">1</a>
+        </li>
+        <li class="page-item {% if 2 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'tafeedback2' 2 %}">2</a>
+        </li>
+        <li class="page-item {% if 3 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'tafeedback3' 3 %}">3</a>
+        </li>
+        <li class="page-item {% if 4 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'tafeedback4' 4 %}">4</a>
+        </li>
+        <li class="page-item {% if 5 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'tafeedback5' 5 %}">5</a>
+        </li>
+        <li class="page-item {% if 6 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'tafeedback6' 6 %}">6</a>
+        </li>
+        <li class="page-item {% if 7 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'tafeedback7' 7 %}">7</a>
+        </li>
+    </ul>
+</nav>
+
+
+<script>
+    function validateForm() {
+        let feedback = document.querySelector('#id_ta_feedback2').value.trim();
+        
+        if (!feedback) {
+            alert("Please enter feedback before proceeding.");
+            return false; 
+        }
+
+        return true; 
+    }
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const feedbackInput = document.querySelector('#id_ta_feedback2');
+        const elapsedInput = document.getElementById('elapsed_time2');
+        const stopwatchElement = document.getElementById('stopwatch2');
+        
+        let savedFeedback = localStorage.getItem('ta_feedback2') || '';
+        let savedElapsedTime = localStorage.getItem('elapsed_time2') || 0;
+    
+        feedbackInput.value = savedFeedback;
+        
+        let startTime = Date.now() - (savedElapsedTime * 1000); 
+    
+        function updateStopwatch() {
+            let elapsedTime = Date.now() - startTime;  
+            let secondsElapsed = Math.floor(elapsedTime / 1000); 
+            let hours = Math.floor(secondsElapsed / 3600);
+            let minutes = Math.floor((secondsElapsed % 3600) / 60);
+            let seconds = secondsElapsed % 60;
+    
+            stopwatchElement.textContent = 
+                `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            
+            localStorage.setItem('elapsed_time2', secondsElapsed);
+     
+            elapsedInput.value = secondsElapsed;
+        }
+     
+        feedbackInput.addEventListener('input', function() {
+            localStorage.setItem('ta_feedback2', feedbackInput.value);
+        });
+    
+        setInterval(updateStopwatch, 1000);
+        
+        window.history.pushState(null, document.title, window.location.href);
+        window.addEventListener('popstate', function(event) {
+            alert("This action is not allowed. Please use the navigation buttons provided.");
+            
+            window.history.pushState(null, document.title, window.location.href);
+        });
+    });
+    
+</script>
+{% endblock %}

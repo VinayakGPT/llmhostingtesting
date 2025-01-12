@@ -1,0 +1,147 @@
+{% extends "base2.html" %}
+{% load widget_tweaks %}
+{% block title %}Problem 1{% endblock %}
+
+{% block content %}
+<form id="tafeedback1-form" method="post" novalidate onsubmit="return validateForm()">
+    {% csrf_token %}
+    <div class="container">
+        <div id="elapsed-time-container" style="position: sticky; top: 0; background-color: white; z-index: 1000; border-bottom: 2px solid #ccc;">
+            <div style="display: flex; justify-content: flex-end; align-items: center;">
+                <label for="stopwatch1" style="font-weight: bold; margin-right: 5px; position: relative; top: 3px;">Elapsed Time:</label>
+                <span id="stopwatch1" style="font-family: monospace; font-size: 18px;">00:00:00</span>
+            </div>
+        </div>
+        <input type="hidden" id="elapsed_time1" name="elapsed_time1" value="{{ saved_elapsed_time }}">
+        <br>
+        <h2> 1. Tetrahedral</h2>
+        <div class="problem-statement">
+            <pre class="wrap"><h5><b>Problem Statement:</b></h5>Given an input N (N>0), your program should output the Nth tetrahedral number. To calculate the nth tetrahedral number, T(n), the formula is as follows:
+T(n) = (1) + (1+2) + (1+2+3) + (1+2+3+4) + ... + (1+2+3+4+...+n)
+Example:
+Input:
+2
+Output:
+4
+Input:
+5
+Output:
+35</pre>
+        </div>
+        <p><pre class="wraptext"><h5><b>Incorrect Solution:</b></h5><code><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span>
+<span class="keyword">int</span> <span class="function">main</span>() {
+    <span class="keyword">int</span> n;
+    <span class="function">scanf</span>(<span class="string">"%d"</span>, &n);
+    <span class="keyword">int</span> sum = 0, i, s;
+    <span class="keyword">for</span>(i = 0; i < n; i++) {
+        s = i * (i + 1) / 2;
+        sum = sum + s; 
+    }
+    <span class="function">printf</span>(<span class="string">"%d"</span>, s);
+    <span class="keyword">return</span> 0;
+}</code></pre></p>
+
+        <div class="form-group">
+            {{ form.ta_feedback1.label_tag }}<br>
+            {{ form.ta_feedback1|attr:"class:styled-textbox" }}
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary" id="next-button">Next</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<nav aria-label="Page navigation example" class="mt-4">
+    <ul class="pagination justify-content-center">
+        <li class="page-item {% if 1 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'tafeedback1' 1 %}">1</a>
+        </li>
+        <li class="page-item {% if 2 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'tafeedback2' 2 %}">2</a>
+        </li>
+        <li class="page-item {% if 3 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'tafeedback3' 3 %}">3</a>
+        </li>
+        <li class="page-item {% if 4 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'tafeedback4' 4 %}">4</a>
+        </li>
+        <li class="page-item {% if 5 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'tafeedback5' 5 %}">5</a>
+        </li>
+        <li class="page-item {% if 6 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'tafeedback6' 6 %}">6</a>
+        </li>
+        <li class="page-item {% if 7 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'tafeedback7' 7 %}">7</a>
+        </li>
+    </ul>
+</nav>
+
+<script>
+    function validateForm() {
+        let feedback = document.querySelector('#id_ta_feedback1').value.trim();
+        
+        if (!feedback) {
+            alert("Please enter feedback before proceeding.");
+            return false; 
+        }
+
+        return true; 
+    }
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const feedbackInput = document.querySelector('#id_ta_feedback1');
+        const elapsedInput = document.getElementById('elapsed_time1');
+        const stopwatchElement = document.getElementById('stopwatch1');
+        
+        // Retrieve the previously stored feedback and elapsed time from local storage
+        let savedFeedback = localStorage.getItem('ta_feedback1') || '';
+        let savedElapsedTime = localStorage.getItem('elapsed_time1') || 0;
+    
+        // Set the feedback text and timer value from local storage (if any)
+        feedbackInput.value = savedFeedback;
+        
+        // Set the start time based on the saved elapsed time
+        let startTime = Date.now() - (savedElapsedTime * 1000);  // Convert seconds to milliseconds
+    
+        // Update the stopwatch every second
+        function updateStopwatch() {
+            let elapsedTime = Date.now() - startTime;  // Calculate elapsed time
+            let secondsElapsed = Math.floor(elapsedTime / 1000);  // Convert to seconds
+            let hours = Math.floor(secondsElapsed / 3600);
+            let minutes = Math.floor((secondsElapsed % 3600) / 60);
+            let seconds = secondsElapsed % 60;
+    
+            // Display the formatted time
+            stopwatchElement.textContent = 
+                `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            
+            // Store the updated elapsed time in local storage
+            localStorage.setItem('elapsed_time1', secondsElapsed);
+    
+            // Update the hidden input with the new elapsed time
+            elapsedInput.value = secondsElapsed; 
+        }
+    
+        // Save the feedback to local storage in real-time when the user types
+        feedbackInput.addEventListener('input', function() {
+            localStorage.setItem('ta_feedback1', feedbackInput.value);
+        });
+    
+        // Update the stopwatch every second
+        setInterval(updateStopwatch, 1000);
+        
+        window.history.pushState(null, document.title, window.location.href);
+        window.addEventListener('popstate', function(event) {
+            alert("This action is not allowed. Please use the navigation buttons provided.");
+            // Push state again to maintain the current state
+            window.history.pushState(null, document.title, window.location.href);
+        });
+    });
+    
+</script>
+
+{% endblock %}

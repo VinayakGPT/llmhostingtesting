@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Student Study Information{% endblock %}
+
+{% block content %}
+<style>
+    .info-container {
+        max-width: 800px;
+        margin: auto;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+    }
+    .info-section {
+        margin-bottom: 2rem;
+    }
+    .info-section h2 {
+        color: #333;
+        font-weight: bold;
+    }
+    .info-section p {
+        font-size: 1.1rem;
+        color: #555;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="info-container">
+        <div class="info-section">
+            <h2>Your Role in the Study</h2>
+            <p>There are 6 C programming problems. For each problem, you will be shown the problem description and program(s) containing logical error(s).    
+                <br><br>
+                First, you will be asked to answer two questions related to the error(s) in the program. Once you answer these questions, you will be shown feedback that can hint at the error(s). You need to answer a few more questions based on the feedback provided. Note that you cannot change your answers to the first two questions once the feedback is revealed to you. Answer all the questions carefully. </p>
+        </div>
+        <div class="info-section">
+            <h2>Why Your Participation Matters</h2>
+            <p>Your participation will help us understand the challenges students face when learning to program. The feedback you receive can also help you improve your own skills.</p>
+        </div>
+        <a href="{% url 'problem1' 1%}" class="btn btn-primary">Get Started</a>
+    </div>
+</div>
+{% endblock %}

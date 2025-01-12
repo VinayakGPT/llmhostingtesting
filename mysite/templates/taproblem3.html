@@ -1,0 +1,491 @@
+{% extends "base2.html" %}
+{% block title %}Problem 3{% endblock %}
+
+{% block content %}
+<form id="taproblem3-form" method="post" novalidate>
+    {% csrf_token %}
+    <div class="container">
+        <br> 
+        <h2> 3. Count Primes</h2>
+        <div class="problem-statement">
+            <pre class="wrap"><h5><b>Problem Statement:</b></h5>Given a positive integer N, count the number of unique positive integer pairs {p1, p2} such that:
+0 &lt;= p1 &lt;= N
+0 &lt;= p2 &lt;= N
+p1 + 2 = p2
+p1 and p2 are primes
+Example:
+Input: 11
+Output: 2
+Explanation: There are two twin prime pairs below 11: {3, 5} and {5, 7}
+Input: 19
+Output: 4
+Explanation: There are four twin prime pairs below 19: {3, 5}, {5, 7}, {11, 13} and {17, 19}</pre>
+        </div>
+
+        <p><pre class="wraptext"><h5><b>Incorrect Solution:</b></h5><code><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span>
+<span class="keyword">int</span> <span class="function">check_prime</span>(<span class="keyword">int</span> num)
+{
+    <span class="keyword">int</span> i;
+    <span class="keyword">for</span>(i=2; i&lt;num; i++)
+        <span class="keyword">if</span>(num%i==0)
+            <span class="keyword">return</span> 0;
+    <span class="keyword">return</span> 1;
+} 
+<span class="keyword">int</span> <span class="function">main</span>()
+{
+    <span class="keyword">int</span> N, i, number_of_pairs=0;
+    <span class="function">scanf</span>(<span class="string">"%d"</span>, &N);
+    <span class="keyword">for</span>(i=2; i&lt;=N; i++)
+        <span class="keyword">if</span>(<span class="function">check_prime</span>(i) && <span class="function">check_prime</span>(i+2))
+            number_of_pairs++;
+    
+    <span class="function">printf</span>(<span class="string">"%d"</span>, number_of_pairs);
+    <span class="keyword">return</span> 0;
+}</code></pre></p>
+
+
+        <ul class="nav nav-tabs" id="feedbackTabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="feedback1-tab" data-toggle="tab" href="#feedback1" role="tab" aria-controls="feedback1" aria-selected="true">Feedback 1</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="feedback2-tab" data-toggle="tab" href="#feedback2" role="tab" aria-controls="feedback2" aria-selected="false">Feedback 2</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="feedback3-tab" data-toggle="tab" href="#feedback3" role="tab" aria-controls="feedback3" aria-selected="false">Feedback 3</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="feedback4-tab" data-toggle="tab" href="#feedback4" role="tab" aria-controls="feedback4" aria-selected="false">Feedback 4</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="feedback5-tab" data-toggle="tab" href="#feedback5" role="tab" aria-controls="feedback5" aria-selected="false">Feedback 5</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="feedback6-tab" data-toggle="tab" href="#feedback6" role="tab" aria-controls="feedback6" aria-selected="false">Feedback 6</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="feedback7-tab" data-toggle="tab" href="#feedback7" role="tab" aria-controls="feedback7" aria-selected="false">Feedback 7</a>
+            </li>
+        </ul>
+
+        
+        <div class="tab-content" id="feedbackTabsContent">
+            <!-- Feedback 1 -->
+            <div class="tab-pane fade show active" id="feedback1" role="tabpanel" aria-labelledby="feedback1-tab">
+                <div class="feedback-content">
+                    <pre class="wrap">
+                        
+The function `check_prime` in the given solution returns `1` if the number is prime and `0` otherwise, but the loop runs inefficiently from 2 up to `num` without the optimization of checking only up to `num/2`. It counts pairs `(i, i+2)` where both `i` and `i+2` are primes, which is actually the correct implementation for counting prime pairs separated by two (often referred to as "twin primes").
+**Summary**: The given solution correctly identifies and counts twin prime pairs `(i, i+2)`, where both are prime numbers, which aligns with the typical expectations from such a problem statement. Thus, the given solution is actually correct for counting twin primes.
+                    </pre>
+                    
+                    <label for="feedback31_rating">How helpful is the feedback to understand the logical error(s) in the given program?</label>
+                    <div class="feedback-rating-container">
+                        <div class="feedback-label not-helpful">Not Helpful</div>
+            
+                        <div class="star-rating mt-3" data-feedback-id="31">
+                            <span class="star {% if feedback_data.feedback31 >= 1 %}filled{% endif %}" data-value="1">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback31 >= 2 %}filled{% endif %}" data-value="2">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback31 >= 3 %}filled{% endif %}" data-value="3">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback31 >= 4 %}filled{% endif %}" data-value="4">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback31 >= 5 %}filled{% endif %}" data-value="5">&#9733;</span>
+                        </div>
+            
+                        <div class="feedback-label helpful">Very Helpful</div>
+                    </div>
+                    <input type="hidden" name="feedback31_rating" id="feedback31_rating" value="{{ feedback_data.feedback31 }}">
+                    <button class="btn btn-primary next-btn mt-3" data-next-tab="feedback2-tab">Save & Next</button>
+                </div>
+            </div>
+
+            <!-- Feedback 2 -->
+            <div class="tab-pane fade" id="feedback2" role="tabpanel" aria-labelledby="feedback2-tab">
+                <div class="feedback-content">
+                    <pre class="wrap">
+                        
+The given solution checks whether `num` is a prime number by testing all divisors from 2 up to `num-1`. It considers `i` and `i + 2` as twin prime pairs if both are identified as prime numbers. This approach correctly identifies if a number is prime but does not handle the case when `num` is 1 and does not ensure pairs (within the context of prime twins).
+**Logical Errors in the given Solution**:
+- The given solution doesn't handle the special case when `num` is 1, leading to potential errors in prime checking.
+- The loop range and conditions in the given solution are less accurate, failing to ensure that all pairs less than or equal to N are checked for the twin prime condition accurately.                        
+                    </pre>
+                    
+                    <label for="feedback32_rating">How helpful is the feedback to understand the logical error(s) in the given program?</label>
+                    <div class="feedback-rating-container">
+                        <div class="feedback-label not-helpful">Not Helpful</div>
+            
+                        <div class="star-rating mt-3" data-feedback-id="32">
+                            <span class="star {% if feedback_data.feedback32 >= 1 %}filled{% endif %}" data-value="1">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback32 >= 2 %}filled{% endif %}" data-value="2">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback32 >= 3 %}filled{% endif %}" data-value="3">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback32 >= 4 %}filled{% endif %}" data-value="4">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback32 >= 5 %}filled{% endif %}" data-value="5">&#9733;</span>
+                        </div>
+            
+                        <div class="feedback-label helpful">Very Helpful</div>
+                    </div>
+                    <input type="hidden" name="feedback32_rating" id="feedback32_rating" value="{{ feedback_data.feedback32 }}">
+                    <button class="btn btn-primary next-btn mt-3" data-next-tab="feedback3-tab">Save & Next</button>
+                </div>
+            </div>
+
+            <!-- Feedback 3 -->
+            <div class="tab-pane fade" id="feedback3" role="tabpanel" aria-labelledby="feedback3-tab">
+                <div class="feedback-content">
+                    <pre class="wrap">
+                        
+The given solution provided the wrong results due to a misunderstanding of how to accurately count twin prime pairs. Here's a summary of the logical errors:
+1. **Misinterpretation of the-prime checking result**: The given solution considers a number prime if `check_prime` returns 1, while it should consider it a prime if the function returns 0 (since flag 0 means no divisors were found).
+2. **Bounding condition issue**: The given solution checks pairs up to `N` instead of up to `N-2`, causing a potential out-of-bounds error and miscounts when `N` is small.
+These issues lead to failures in correctly identifying and counting twin prime pairs as per the problem statement. 
+                    </pre>
+                    
+                    <label for="feedback33_rating">How helpful is the feedback to understand the logical error(s) in the given program?</label>
+                    <div class="feedback-rating-container">
+                        <div class="feedback-label not-helpful">Not Helpful</div>
+            
+                        <div class="star-rating mt-3" data-feedback-id="33">
+                            <span class="star {% if feedback_data.feedback33 >= 1 %}filled{% endif %}" data-value="1">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback33 >= 2 %}filled{% endif %}" data-value="2">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback33 >= 3 %}filled{% endif %}" data-value="3">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback33 >= 4 %}filled{% endif %}" data-value="4">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback33 >= 5 %}filled{% endif %}" data-value="5">&#9733;</span>
+                        </div>
+            
+                        <div class="feedback-label helpful">Very Helpful</div>
+                    </div>
+                    <input type="hidden" name="feedback33_rating" id="feedback33_rating" value="{{ feedback_data.feedback33 }}">
+                    <button class="btn btn-primary next-btn mt-3" data-next-tab="feedback4-tab">Save & Next</button>
+                </div>
+            </div>
+            <!-- Feedback 4 -->
+            <div class="tab-pane fade" id="feedback4" role="tabpanel" aria-labelledby="feedback4-tab">
+                <div class="feedback-content">
+                    <pre class="wrap">
+                        
+1. **Prime Checking Logic**: 
+- The incorrect solution counts `1` as a prime number due to the condition `if(num == 1) return 1;` in the prime checking function `check_prime()`, which is incorrect since `1` is not a prime number.
+- The correct solution correctly identifies non-prime numbers by implementing a better prime-checking mechanism that validates up to `num/2`.
+2. **Counting Twin Prime Pairs**:
+- In the incorrect solution, the twin prime counting logic is flawed. It wrongly checks to see if `p1` and `p2` are both non-prime (`!check_prime(i) && !check_prime(i + 2)`). This logic should identify primes, not non-primes.
+- The correct solution correctly checks whether both `p1` and `p2` are prime numbers and counts the pairs if both conditions are true.
+3. **Edge Case Handling**:
+- The correct solution properly iterates up to `N-2` ensuring all pairs within the range are considered, whereas the incorrect one attempts to handle up to `N` directly, leading to incorrect counting logic.
+SuThe incorrect solution fails to properly identify primes and incorrectly counts non-prime pairs, affecting the logical correctness of the twin prime counting algorithm. The correct solution efficiently checks for prime numbers and accurately counts the valid twin prime pairs within the given range.
+                    </pre>
+                    
+                    <label for="feedback34_rating">How helpful is the feedback to understand the logical error(s) in the given program?</label>
+                    <div class="feedback-rating-container">
+                        <div class="feedback-label not-helpful">Not Helpful</div>
+            
+                        <div class="star-rating mt-3" data-feedback-id="34">
+                            <span class="star {% if feedback_data.feedback34 >= 1 %}filled{% endif %}" data-value="1">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback34 >= 2 %}filled{% endif %}" data-value="2">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback34 >= 3 %}filled{% endif %}" data-value="3">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback34 >= 4 %}filled{% endif %}" data-value="4">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback34 >= 5 %}filled{% endif %}" data-value="5">&#9733;</span>
+                        </div>
+            
+                        <div class="feedback-label helpful">Very Helpful</div>
+                    </div>
+                    <input type="hidden" name="feedback34_rating" id="feedback34_rating" value="{{ feedback_data.feedback34 }}">
+                    <button class="btn btn-primary next-btn mt-3" data-next-tab="feedback5-tab">Save & Next</button>
+                </div>
+            </div>
+
+            <!-- Feedback 5 -->
+            <div class="tab-pane fade" id="feedback5" role="tabpanel" aria-labelledby="feedback5-tab">
+                <div class="feedback-content">
+                    <pre class="wrap">
+                        
+The given solution iterates from 2 to N and checks if both the current number `i` and `i+2` are prime. If both are prime, it increments the `number_of_pairs` count. However, it fails to correctly handle the condition where the loop should only check up to `N-2` to avoid unnecessary iterations and potential off-by-one errors.
+In summary, the incorrect solution fails to properly handle edge conditions due to its loop range and does not correctly count twin primes by not limiting the iteration up to `N-2`, which may result in counting pairs outside the desired range.
+                    </pre>
+                    
+                    <label for="feedback35_rating">How helpful is the feedback to understand the logical error(s) in the given program?</label>
+                    <div class="feedback-rating-container">
+                        <div class="feedback-label not-helpful">Not Helpful</div>
+            
+                        <div class="star-rating mt-3" data-feedback-id="35">
+                            <span class="star {% if feedback_data.feedback35 >= 1 %}filled{% endif %}" data-value="1">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback35 >= 2 %}filled{% endif %}" data-value="2">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback35 >= 3 %}filled{% endif %}" data-value="3">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback35 >= 4 %}filled{% endif %}" data-value="4">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback35 >= 5 %}filled{% endif %}" data-value="5">&#9733;</span>
+                        </div>
+            
+                        <div class="feedback-label helpful">Very Helpful</div>
+                    </div>
+                    <input type="hidden" name="feedback35_rating" id="feedback35_rating" value="{{ feedback_data.feedback35 }}">
+                    <button class="btn btn-primary next-btn mt-3" data-next-tab="feedback6-tab">Save & Next</button>
+                </div>
+            </div>
+            <!-- Feedback 6 -->
+            <div class="tab-pane fade" id="feedback6" role="tabpanel" aria-labelledby="feedback6-tab">
+                <div class="feedback-content">
+                    <pre class="wrap">
+                        
+{{ ta1_feedback3 }}
+</pre>
+                    
+                    <label for="feedback36_rating">How helpful is the feedback to understand the logical error(s) in the given program?</label>
+                    <div class="feedback-rating-container">
+                        <div class="feedback-label not-helpful">Not Helpful</div>
+            
+                        <div class="star-rating mt-3" data-feedback-id="36">
+                            <span class="star {% if feedback_data.feedback36 >= 1 %}filled{% endif %}" data-value="1">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback36 >= 2 %}filled{% endif %}" data-value="2">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback36 >= 3 %}filled{% endif %}" data-value="3">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback36 >= 4 %}filled{% endif %}" data-value="4">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback36 >= 5 %}filled{% endif %}" data-value="5">&#9733;</span>
+                        </div>
+            
+                        <div class="feedback-label helpful">Very Helpful</div>
+                    </div>
+                    <input type="hidden" name="feedback36_rating" id="feedback36_rating" value="{{ feedback_data.feedback36 }}">
+                    <button class="btn btn-primary next-btn mt-3" data-next-tab="feedback7-tab">Save & Next</button>
+                </div>
+            </div>
+
+            <!-- Feedback 7 -->
+            <div class="tab-pane fade" id="feedback7" role="tabpanel" aria-labelledby="feedback7-tab">
+                <div class="feedback-content">
+                    <pre class="wrap">
+                        
+{{ ta2_feedback3 }}
+</pre>
+                    
+                    <label for="feedback37_rating">How helpful is the feedback to understand the logical error(s) in the given program?</label>
+                    <div class="feedback-rating-container">
+                        <div class="feedback-label not-helpful">Not Helpful</div>
+            
+                        <div class="star-rating mt-3" data-feedback-id="37">
+                            <span class="star {% if feedback_data.feedback37 >= 1 %}filled{% endif %}" data-value="1">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback37 >= 2 %}filled{% endif %}" data-value="2">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback37 >= 3 %}filled{% endif %}" data-value="3">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback37 >= 4 %}filled{% endif %}" data-value="4">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback37 >= 5 %}filled{% endif %}" data-value="5">&#9733;</span>
+                        </div>
+            
+                        <div class="feedback-label helpful">Very Helpful</div>
+                    </div>
+                    <input type="hidden" name="feedback37_rating" id="feedback37_rating" value="{{ feedback_data.feedback37 }}">
+                    <button type="submit" class="btn btn-primary">Next Problem</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+ 
+<nav aria-label="Page navigation example" class="mt-4">
+    <ul class="pagination justify-content-center">
+        <li class="page-item {% if 1 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'taproblem1' 1 %}">1</a>
+        </li>
+        <li class="page-item {% if 2 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'taproblem2' 2 %}">2</a>
+        </li>
+        <li class="page-item {% if 3 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'taproblem3' 3 %}">3</a>
+        </li>
+        <li class="page-item {% if 4 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'taproblem4' 4 %}">4</a>
+        </li>
+        <li class="page-item {% if 5 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'taproblem5' 5 %}">5</a>
+        </li>
+        <li class="page-item {% if 6 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'taproblem6' 6 %}">6</a>
+        </li>
+        <li class="page-item {% if 7 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'taproblem7' 7 %}">7</a>
+        </li>
+    </ul>
+</nav>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const tabs = document.querySelectorAll('.nav-item .nav-link');
+            
+        const isFirstVisit3 = localStorage.getItem('firstVisit3') === null;
+
+        if (isFirstVisit3) {
+            tabs.forEach((tab, index) => {
+                if (index !== 0) {
+                    tab.classList.add('disabled');
+                }
+            });
+        } 
+        else {
+            tabs.forEach((tab, index) => {
+                const tabId = tab.getAttribute('href').substring(1); 
+                const isTabUnlocked = localStorage.getItem(`tabUnlocked_${tabId}`) === 'true';
+
+                if (isTabUnlocked || index === 0) {
+                    tab.classList.remove('disabled');
+                }
+            });
+        }
+
+        function checkAllFeedbackRatings() {
+            const unfilledFeedback = [];
+
+            document.querySelectorAll('.tab-pane').forEach(tab => {
+                const hiddenInputs = tab.querySelectorAll('input[type="hidden"]');
+
+                hiddenInputs.forEach(hiddenInput => {
+                    const feedbackId = hiddenInput.getAttribute('name').match(/\d+/)[0];
+                    const selectedRating = hiddenInput.value;
+
+                    if (!selectedRating || selectedRating === '0') {
+                        unfilledFeedback.push(`Feedback ${feedbackId.charAt(feedbackId.length - 1)}`);
+                    }
+                });
+            });
+
+            return unfilledFeedback;
+        }
+
+        document.querySelector('.btn-primary[type="submit"]').addEventListener('click', (e) => {
+            const unfilledFeedback = checkAllFeedbackRatings();
+
+            if (unfilledFeedback.length > 0) {
+                alert(`Please rate these feedbacks to move on to the next problem: ${unfilledFeedback.join(', ')}`);
+                e.preventDefault();
+            } else {
+                localStorage.setItem('firstVisit3', 'true');
+            }
+        });
+
+        document.querySelectorAll('.next-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+        
+                const currentTabPane = button.closest('.tab-pane');
+                const feedbackItems = currentTabPane.querySelectorAll('.star-rating');
+                const unfilledFeedback = [];
+        
+                feedbackItems.forEach(feedback => {
+                    const feedbackId = feedback.getAttribute('data-feedback-id');
+                    const savedRating = localStorage.getItem(`feedback${feedbackId}_rating`);
+        
+                    if (!savedRating || savedRating === '0') {
+                        unfilledFeedback.push(`Feedback ${feedbackId}`);
+                    }
+                });
+        
+                if (unfilledFeedback.length > 0) {
+                    alert(`Please rate the given feedback before moving to the next tab`);
+                    return;
+                }
+        
+                const nextTabId = button.getAttribute('data-next-tab');
+                const nextTab = document.getElementById(nextTabId);
+        
+                if (nextTab) {
+                    nextTab.classList.remove('disabled');
+                    localStorage.setItem(`tabUnlocked_${nextTabId}`, 'true');
+        
+                    const currentTab = currentTabPane.id;
+                    const currentNavLink = document.querySelector(`[href="#${currentTab}"]`);
+                    currentNavLink.classList.remove('disabled');
+        
+                    nextTab.click();
+                }
+            });
+        });
+
+        document.querySelectorAll('.star-rating').forEach(starRatingDiv => {
+            const feedbackId = starRatingDiv.getAttribute('data-feedback-id');
+            const hiddenInput = document.querySelector(`input[name='feedback${feedbackId}_rating']`);
+
+            if (!hiddenInput) {
+                console.error(`Hidden input for feedback ${feedbackId} not found`);
+                return;
+            }
+
+            const savedRating = localStorage.getItem(`feedback${feedbackId}_rating`);
+            if (savedRating) {
+                hiddenInput.value = savedRating;
+
+                const stars = Array.from(starRatingDiv.querySelectorAll('.star'));
+                for (let i = 0; i < savedRating; i++) {
+                    stars[i].classList.add('filled');
+                }
+            }
+
+            starRatingDiv.querySelectorAll('.star').forEach(star => {
+                star.addEventListener('click', () => {
+                    const value = star.getAttribute('data-value');
+                    const stars = Array.from(star.parentElement.children);
+
+                    stars.forEach(s => s.classList.remove('filled'));
+
+                    for (let i = 0; i < value; i++) {
+                        stars[i].classList.add('filled');
+                    }
+
+                    hiddenInput.value = value;
+
+                    localStorage.setItem(`feedback${feedbackId}_rating`, value);
+                });
+            });
+        });
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                if (tab.classList.contains('disabled')) {
+                    e.preventDefault();
+                }
+            });
+        });
+
+        tabs[0].classList.remove('disabled');
+    });
+</script> 
+
+
+<style>
+    .feedback-rating-container {
+        display: flex;
+        align-items: baseline; 
+        justify-content: center; 
+        margin-top: 1rem; 
+    }
+    
+    .star-rating .star {
+        font-size: 30px; 
+        color: #ddd; 
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+    
+    .mt-3, .my-3 {
+        margin-top: 1rem !important;
+        text-align: center;
+    }
+    
+    .star-rating .star.filled {
+        color: #ffc107; 
+    }
+    
+    .not-helpful {
+        color: red;
+        position: relative;
+        right: 0.6rem;
+        bottom: 0.2rem;
+        font-weight: 600;
+    }
+    
+    .helpful {
+        color: green;
+        position: relative;
+        left: 0.6rem;
+        bottom: 0.2rem;
+        font-weight: 600;
+    }
+
+    label {
+        font-weight: 600;
+    }
+</style>
+
+{% endblock %}

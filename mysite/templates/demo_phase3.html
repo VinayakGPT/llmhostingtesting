@@ -1,0 +1,219 @@
+{% extends "base2.html" %}
+{% load widget_tweaks %}
+{% block title %}Sample Problem{% endblock %}
+
+{% block content %}
+<form id="problem1-form" method="post" novalidate>
+
+    {% csrf_token %}
+    <div class="container">
+        <br>
+        <h2>Sample Problem</h2>
+        <div class="problem-statement">
+            <pre class="wrap"><h5><b>Problem Statement:</b></h5>You would be given a positive integer as input. Write a program which prints the reversed number.  
+Input: 
+12345 
+Output: 
+Reverse of 12345 is 54321 </pre>
+        </div>
+        <p><pre class="wraptext"><h5><b>Incorrect Solution:</b></h5><code><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span>
+<span class="keyword">int</span> <span class="function">main</span>() { 
+    <span class="keyword">int</span> a, f; 
+    <span class="function">scanf</span>(<span class="string">"%d"</span>, &a); 
+    <span class="function">printf</span>(<span class="string">"Reverse of %d is "</span>, a); 
+            
+    <span class="keyword">while</span> ((a / 10) > 0) 
+    { 
+        f = (a % 10); 
+        <span class="function">printf</span>(<span class="string">"%d"</span>, f); 
+        a = (a / 10); 
+    } 
+            
+    <span class="function">printf</span>(<span class="string">"%d"</span>, a); 
+    <span class="keyword">return</span> 0; 
+}</code></pre></p>
+        <div class="form-group">
+            <b>Select from the following options that best describe the error in the given program:</b><br>
+            <label><input type="radio" name="error_description_11" value="1"> Misses last digit in output when reversing numbers </label><br>
+            <label><input type="radio" name="error_description_11" value="2"> Incorrectly handles zero input</label><br>
+            <label><input type="radio" name="error_description_11" value="3"> Cannot reverse a number ending with 0 correctly</label>
+        </div>
+
+        <div class="form-group"> 
+            <label for="understandability11"><b>How difficult is it to identify the logical error(s) in the given program?</b></label>
+            <div class="star-rating mt-3" data-feedback-id="11">
+                <span style="color: green; font-size: 0.9rem; position: relative; bottom: 0.25rem; font-weight: 600">Very Easy</span>
+                <span class="star" data-value="1">&#9733;</span>
+                <span class="star" data-value="2">&#9733;</span>
+                <span class="star" data-value="3">&#9733;</span>
+                <span class="star" data-value="4">&#9733;</span>
+                <span class="star" data-value="5">&#9733;</span>
+                <span style="color: red; font-size: 0.9rem; position: relative; bottom: 0.25rem; font-weight: 600">Very Hard</span>
+            </div>
+            <input type="hidden" name="understandability11" id="understandability11" value="0">
+        </div>
+        
+        <div class="form-group">
+            <button type="button" id="show-feedback-btninf" class="btn btn-secondary">Show Feedback</button>
+        </div>
+
+        <div id="conditional-content1" class="hidden">
+            <div class="feedback">
+                <pre class="wrap"><h5><b>Feedback:</b></h5>The solution has a logical error in the while condition. The loop continues only while (a / 10) > 0, which means it stops prematurely when a becomes a single-digit number. As a result, the last digit is printed outside the loop separately, which is unnecessary and inefficient.
+To fix this:
+The loop condition should be while (a > 0) so that the loop continues until all digits are processed.
+The printf("%d", a); outside the loop can then be removed, as the loop itself will handle printing all digits.</pre>
+            </div>
+            
+            <div class="form-group">
+                <b>Select from the following options that best describe the error in the given program:</b><br>
+                <label><input type="radio" name="error_description_12" value="1"> Misses last digit in output when reversing numbers</label><br>
+                <label><input type="radio" name="error_description_12" value="2"> Incorrectly handles zero input</label><br>
+                <label><input type="radio" name="error_description_12" value="3"> Cannot reverse a number ending with 0 correctly</label>
+            </div>
+
+            <div class="form-group">
+                <label for="understandability12"><b>How helpful is the feedback to understand the logical error(s) in the given program?</b></label>
+                <div class="star-rating mt-3" data-feedback-id="12">
+                    <span style="color: red; font-size: 0.9rem; position: relative; bottom: 0.25rem; font-weight: 600">Not Helpful</span>
+                    <span class="star" data-value="1">&#9733;</span>
+                    <span class="star" data-value="2">&#9733;</span>
+                    <span class="star" data-value="3">&#9733;</span>
+                    <span class="star" data-value="4">&#9733;</span>
+                    <span class="star" data-value="5">&#9733;</span>
+                    <span style="color: green; font-size: 0.9rem; position: relative; bottom: 0.25rem; font-weight: 600">Very Helpful</span>
+                </div>
+                <input type="hidden" name="understandability12" id="understandability12" value="0">
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" id="submit-btn" class="btn btn-primary">Save & Next</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const showFeedbackBtn = document.getElementById('show-feedback-btninf');
+        const conditionalContent = document.getElementById('conditional-content1');
+        const submitBtn = document.getElementById('submit-btn');
+        const firstStarRating = document.querySelector('.star-rating[data-feedback-id="11"]');
+        showFeedbackBtn.disabled = true;
+
+        let understandabilityRating = null;
+        let errorDescription11 = null;
+        let errorDescription12 = null;
+
+        function lockStars(feedbackId, ratingValue) {
+            const stars = document.querySelectorAll(`.star-rating[data-feedback-id="${feedbackId}"] .star`);
+            stars.forEach(star => {
+                if (parseInt(star.getAttribute('data-value')) <= ratingValue) {
+                    star.classList.add('filled');
+                } else {
+                    star.classList.remove('filled');
+                }
+                star.style.pointerEvents = 'none'; 
+            });
+        }
+
+        function checkFeedbackButtonState() {
+            showFeedbackBtn.disabled = !(understandabilityRating && errorDescription11);
+        }
+
+        document.querySelectorAll('.star-rating').forEach(starRatingDiv => {
+            const feedbackId = starRatingDiv.getAttribute('data-feedback-id');
+            const hiddenInput = document.querySelector(`input[name='understandability${feedbackId}']`);
+            const stars = starRatingDiv.querySelectorAll('.star');
+
+            if (hiddenInput.value !== "0") {
+                lockStars(feedbackId, parseInt(hiddenInput.value));
+            }
+
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const value = star.getAttribute('data-value');
+                    stars.forEach(s => s.classList.remove('filled'));
+                    for (let i = 0; i < value; i++) stars[i].classList.add('filled');
+                    
+                    hiddenInput.value = value;
+                    if (feedbackId === '11') {
+                        understandabilityRating = value;
+                        checkFeedbackButtonState();
+                    }
+                });
+            });
+        });
+
+        const errorDescription11Radios = document.querySelectorAll('input[name="error_description_11"]');
+        errorDescription11Radios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.checked) {
+                    errorDescription11 = radio.value;
+                    checkFeedbackButtonState();
+                }
+            });
+        });
+
+        const errorDescription12Radios = document.querySelectorAll('input[name="error_description_12"]');
+        errorDescription12Radios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.checked) {
+                    errorDescription12 = radio.value;
+                }
+            });
+        });
+
+        showFeedbackBtn.addEventListener('click', () => {
+            conditionalContent.classList.remove('hidden');
+            showFeedbackBtn.disabled = true;
+            
+            document.querySelectorAll('input[name="error_description_11"], .star-rating').forEach(input => {
+                input.disabled = true;
+            });
+            
+            const firstStarRatingValue = document.querySelector('input[name="understandability11"]').value;
+            lockStars('11', firstStarRatingValue);
+        });
+
+        submitBtn.addEventListener('click', (e) => {
+            const requiredFields = document.querySelectorAll('input[type="hidden"]');
+            let allFilled = Array.from(requiredFields).every(field => field.value !== "0");
+
+            if (!allFilled) {
+                e.preventDefault();
+                alert("Please fill out all fields before submitting.");
+            } else {
+                window.location.href = '{% url "index" %}';
+            }
+        });
+    });
+</script>
+
+<style>
+    .star {
+        cursor: pointer;
+        font-size: 2rem;
+        color: #ddd;
+    }
+
+    .star.filled {
+        color: gold;
+    }
+
+    .star-rating .star.disabled {
+        color: #ddd !important;
+        pointer-events: none;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .btn {
+        font-size: 1.1rem;
+    }
+</style>
+{% endblock %}
+ 

@@ -1,0 +1,425 @@
+{% extends "base2.html" %}
+{% block title %}Sample Problem{% endblock %}
+
+{% block content %}
+<form id="taproblem9-form" method="post" novalidate>
+    {% csrf_token %}
+    <div class="container">
+        <br> 
+        <h2>Sample Problem</h2>
+        <div class="problem-statement">
+            <pre class="wrap"><h5><b>Problem Statement:</b></h5>You would be given a positive integer as input. Write a program which prints the reversed number.  
+Input: 
+12345 
+Output: 
+Reverse of 12345 is 54321 </pre>
+        </div>
+        <p><pre class="wraptext"><h5><b>Incorrect Solution:</b></h5><code><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span>
+<span class="keyword">int</span> <span class="function">main</span>() { 
+    <span class="keyword">int</span> a, f; 
+    <span class="function">scanf</span>(<span class="string">"%d"</span>, &a); 
+    <span class="function">printf</span>(<span class="string">"Reverse of %d is "</span>, a); 
+            
+    <span class="keyword">while</span> ((a / 10) > 0) 
+    { 
+        f = (a % 10); 
+        <span class="function">printf</span>(<span class="string">"%d"</span>, f); 
+        a = (a / 10); 
+    } 
+            
+    <span class="function">printf</span>(<span class="string">"%d"</span>, a); 
+    <span class="keyword">return</span> 0; 
+}</code></pre></p>
+
+
+<ul class="nav nav-tabs" id="feedbackTabs" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link feedback-tab active" id="feedback1-tab" data-toggle="tab" href="#feedback1" role="tab" aria-controls="feedback1" aria-selected="true">Feedback 1</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link feedback-tab" id="feedback2-tab" data-toggle="tab" href="#feedback2" role="tab" aria-controls="feedback2" aria-selected="false">Feedback 2</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link feedback-tab" id="feedback3-tab" data-toggle="tab" href="#feedback3" role="tab" aria-controls="feedback3" aria-selected="false">Feedback 3</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link feedback-tab" id="feedback4-tab" data-toggle="tab" href="#feedback4" role="tab" aria-controls="feedback4" aria-selected="false">Feedback 4</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link feedback-tab" id="feedback5-tab" data-toggle="tab" href="#feedback5" role="tab" aria-controls="feedback5" aria-selected="false">Feedback 5</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link feedback-tab" id="feedback6-tab" data-toggle="tab" href="#feedback6" role="tab" aria-controls="feedback6" aria-selected="false">Feedback 6</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link feedback-tab" id="feedback7-tab" data-toggle="tab" href="#feedback7" role="tab" aria-controls="feedback7" aria-selected="false">Feedback 7</a>
+    </li>
+</ul>
+
+
+        
+        <div class="tab-content" id="feedbackTabsContent">
+            <!-- Feedback 1 -->
+            <div class="tab-pane fade show active" id="feedback1" role="tabpanel" aria-labelledby="feedback1-tab">
+                <div class="feedback-content"> 
+                    <pre class="wrap">
+Incorrectly handles single-digit inputs, leading to unintended output.
+                    </pre>
+                     
+                    <label for="feedback11_rating">How helpful is the feedback to understand the logical error(s) in the given program?</label>
+                    <div class="feedback-rating-container">
+                        <div class="feedback-label not-helpful">Not Helpful</div>
+            
+                        <div class="star-rating mt-3" data-feedback-id="11">
+                            <span class="star {% if feedback_data.feedback11 >= 1 %}filled{% endif %}" data-value="1">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback11 >= 2 %}filled{% endif %}" data-value="2">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback11 >= 3 %}filled{% endif %}" data-value="3">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback11 >= 4 %}filled{% endif %}" data-value="4">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback11 >= 5 %}filled{% endif %}" data-value="5">&#9733;</span>
+                        </div>
+            
+                        <div class="feedback-label helpful">Very Helpful</div>
+                    </div>
+                    <input type="hidden" name="feedback11_rating" id="feedback11_rating" value="{{ feedback_data.feedback11 }}">
+                    <button class="btn btn-primary next-btn mt-3" data-next-tab="feedback2-tab">Save & Next</button>
+                </div>
+            </div>
+            
+            <!-- Feedback 2 -->
+            <div class="tab-pane fade" id="feedback2" role="tabpanel" aria-labelledby="feedback2-tab">
+                <div class="feedback-content">
+                    <pre class="wrap">
+                        
+Loop condition while ((a / 10) > 0) fails to print the last digit if a is less than 10.   
+                    </pre>
+                    
+                    <label for="feedback12_rating">How helpful is the feedback to understand the logical error(s) in the given program?</label>
+                    <div class="feedback-rating-container">
+                        <div class="feedback-label not-helpful">Not Helpful</div>
+            
+                        <div class="star-rating mt-3" data-feedback-id="12">
+                            <span class="star {% if feedback_data.feedback12 >= 1 %}filled{% endif %}" data-value="1">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback12 >= 2 %}filled{% endif %}" data-value="2">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback12 >= 3 %}filled{% endif %}" data-value="3">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback12 >= 4 %}filled{% endif %}" data-value="4">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback12 >= 5 %}filled{% endif %}" data-value="5">&#9733;</span>
+                        </div>
+            
+                        <div class="feedback-label helpful">Very Helpful</div>
+                    </div>
+                    <input type="hidden" name="feedback12_rating" id="feedback12_rating" value="{{ feedback_data.feedback12 }}">
+                    <button class="btn btn-primary next-btn mt-3" data-next-tab="feedback3-tab">Save & Next</button>
+                </div>
+            </div>
+
+            <!-- Feedback 3 -->
+            <div class="tab-pane fade" id="feedback3" role="tabpanel" aria-labelledby="feedback3-tab">
+                <div class="feedback-content">
+                    <pre class="wrap">
+                        
+Does not handle negative numbers, which may cause unexpected results.
+                    </pre>
+                    
+                    <label for="feedback13_rating">How helpful is the feedback to understand the logical error(s) in the given program?</label>
+                    <div class="feedback-rating-container">
+                        <div class="feedback-label not-helpful">Not Helpful</div>
+            
+                        <div class="star-rating mt-3" data-feedback-id="13">
+                            <span class="star {% if feedback_data.feedback13 >= 1 %}filled{% endif %}" data-value="1">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback13 >= 2 %}filled{% endif %}" data-value="2">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback13 >= 3 %}filled{% endif %}" data-value="3">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback13 >= 4 %}filled{% endif %}" data-value="4">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback13 >= 5 %}filled{% endif %}" data-value="5">&#9733;</span>
+                        </div>
+            
+                        <div class="feedback-label helpful">Very Helpful</div>
+                    </div>
+                    <input type="hidden" name="feedback13_rating" id="feedback13_rating" value="{{ feedback_data.feedback13 }}">
+                    <button class="btn btn-primary next-btn mt-3" data-next-tab="feedback4-tab">Save & Next</button>
+                </div>
+            </div>
+
+            <!-- Feedback 4 -->
+            <div class="tab-pane fade" id="feedback4" role="tabpanel" aria-labelledby="feedback4-tab">
+                <div class="feedback-content">
+                    <pre class="wrap">
+                        
+Missing newline after the output, making the prompt look cluttered.
+                    </pre>
+                    
+                    <label for="feedback14_rating">How helpful is the feedback to understand the logical error(s) in the given program?</label>
+                    <div class="feedback-rating-container">
+                        <div class="feedback-label not-helpful">Not Helpful</div>
+            
+                        <div class="star-rating mt-3" data-feedback-id="14">
+                            <span class="star {% if feedback_data.feedback14 >= 1 %}filled{% endif %}" data-value="1">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback14 >= 2 %}filled{% endif %}" data-value="2">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback14 >= 3 %}filled{% endif %}" data-value="3">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback14 >= 4 %}filled{% endif %}" data-value="4">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback14 >= 5 %}filled{% endif %}" data-value="5">&#9733;</span>
+                        </div>
+            
+                        <div class="feedback-label helpful">Very Helpful</div>
+                    </div>
+                    <input type="hidden" name="feedback14_rating" id="feedback14_rating" value="{{ feedback_data.feedback14 }}">
+                    <button class="btn btn-primary next-btn mt-3" data-next-tab="feedback5-tab">Save & Next</button>
+                </div>
+            </div>
+ 
+            <!-- Feedback 5 -->
+            <div class="tab-pane fade" id="feedback5" role="tabpanel" aria-labelledby="feedback5-tab">
+                <div class="feedback-content">
+                    <pre class="wrap">
+                        
+Variable f could be initialized inside the loop for better clarity.
+                    </pre>
+                    
+                    <label for="feedback15_rating">How helpful is the feedback to understand the logical error(s) in the given program?</label>
+                    <div class="feedback-rating-container">
+                        <div class="feedback-label not-helpful">Not Helpful</div>
+            
+                        <div class="star-rating mt-3" data-feedback-id="15">
+                            <span class="star {% if feedback_data.feedback15 >= 1 %}filled{% endif %}" data-value="1">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback15 >= 2 %}filled{% endif %}" data-value="2">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback15 >= 3 %}filled{% endif %}" data-value="3">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback15 >= 4 %}filled{% endif %}" data-value="4">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback15 >= 5 %}filled{% endif %}" data-value="5">&#9733;</span>
+                        </div>
+            
+                        <div class="feedback-label helpful">Very Helpful</div>
+                    </div>
+                    <input type="hidden" name="feedback15_rating" id="feedback15_rating" value="{{ feedback_data.feedback15 }}">
+                    <button class="btn btn-primary next-btn mt-3" data-next-tab="feedback6-tab">Save & Next</button>
+                </div>
+            </div>
+            <!-- Feedback 6 -->
+            <div class="tab-pane fade" id="feedback6" role="tabpanel" aria-labelledby="feedback6-tab">
+                <div class="feedback-content">
+                    <pre class="wrap">
+                        
+while ((a / 10) > 0) can lead to an infinite loop if a is not an integer.
+                    </pre>
+                     
+                    <label for="feedback16_rating">How helpful is the feedback to understand the logical error(s) in the given program?</label>
+                    <div class="feedback-rating-container">
+                        <div class="feedback-label not-helpful">Not Helpful</div>
+            
+                        <div class="star-rating mt-3" data-feedback-id="16">
+                            <span class="star {% if feedback_data.feedback16 >= 1 %}filled{% endif %}" data-value="1">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback16 >= 2 %}filled{% endif %}" data-value="2">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback16 >= 3 %}filled{% endif %}" data-value="3">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback16 >= 4 %}filled{% endif %}" data-value="4">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback16 >= 5 %}filled{% endif %}" data-value="5">&#9733;</span>
+                        </div>
+            
+                        <div class="feedback-label helpful">Very Helpful</div>
+                    </div>
+                    <input type="hidden" name="feedback16_rating" id="feedback16_rating" value="{{ feedback_data.feedback16 }}">
+                    <button class="btn btn-primary next-btn mt-3" data-next-tab="feedback7-tab">Save & Next</button>
+                </div>
+            </div>
+
+            <!-- Feedback 7 -->
+            <div class="tab-pane fade" id="feedback7" role="tabpanel" aria-labelledby="feedback7-tab">
+                <div class="feedback-content">
+                    <pre class="wrap">
+                        
+Lack of user instructions for input can confuse users.
+                    </pre>
+                    
+                    <label for="feedback17_rating">How helpful is the feedback to understand the logical error(s) in the given program?</label>
+                    <div class="feedback-rating-container">
+                        <div class="feedback-label not-helpful">Not Helpful</div>
+            
+                        <div class="star-rating mt-3" data-feedback-id="17">
+                            <span class="star {% if feedback_data.feedback17 >= 1 %}filled{% endif %}" data-value="1">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback17 >= 2 %}filled{% endif %}" data-value="2">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback17 >= 3 %}filled{% endif %}" data-value="3">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback17 >= 4 %}filled{% endif %}" data-value="4">&#9733;</span>
+                            <span class="star {% if feedback_data.feedback17 >= 5 %}filled{% endif %}" data-value="5">&#9733;</span>
+                        </div>
+            
+                        <div class="feedback-label helpful">Very Helpful</div>
+                    </div>  
+                    <input type="hidden" name="feedback17_rating" id="feedback17_rating" value="{{ feedback_data.feedback17 }}">
+                    <button type="submit" class="btn btn-primary">Next Problem</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<nav aria-label="Page navigation example" class="mt-4">
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <a class="page-link" href="{% url 'taproblem1' 1 %}">1</a>
+        </li>
+        <li class="page-item disabled">
+            <a class="page-link" href="{% url 'taproblem2' 2 %}">2</a>
+        </li>
+        <li class="page-item disabled">
+            <a class="page-link" href="{% url 'taproblem3' 3 %}">3</a>
+        </li>
+        <li class="page-item disabled">
+            <a class="page-link" href="{% url 'taproblem4' 4 %}">4</a>
+        </li>
+        <li class="page-item disabled">
+            <a class="page-link" href="{% url 'taproblem5' 5 %}">5</a>
+        </li>
+        <li class="page-item disabled">
+            <a class="page-link" href="{% url 'taproblem6' 6 %}">6</a>
+        </li>
+        <li class="page-item disabled">
+            <a class="page-link" href="{% url 'taproblem7' 7 %}">7</a>
+        </li>
+    </ul>
+</nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const tabs = document.querySelectorAll('.nav-item .feedback-tab');
+        let unlockedTabs = new Set();  
+        let feedbackRatings = {};  
+
+        tabs.forEach((tab, index) => {
+            if (index !== 0) {
+                tab.classList.add('disabled');
+            }
+        });
+
+        function checkAllFeedbackRatings() {
+            const unfilledFeedback = [];
+
+            document.querySelectorAll('.tab-pane').forEach(tab => {
+                const hiddenInputs = tab.querySelectorAll('input[type="hidden"]');
+
+                hiddenInputs.forEach(hiddenInput => {
+                    const feedbackId = hiddenInput.getAttribute('name').match(/\d+/)[0];
+                    const selectedRating = hiddenInput.value;
+
+                    if (!selectedRating || selectedRating === '0') {
+                        unfilledFeedback.push(`Feedback ${feedbackId.charAt(feedbackId.length - 1)}`);
+                    }
+                });
+            });
+
+            return unfilledFeedback;
+        }
+
+        document.querySelector('.btn-primary[type="submit"]').addEventListener('click', (e) => {
+            const unfilledFeedback = checkAllFeedbackRatings();
+
+            if (unfilledFeedback.length > 0) {
+                alert(`Please rate these feedbacks to move on to the next problem: ${unfilledFeedback.join(', ')}`);
+                e.preventDefault();
+            }
+        });
+
+        document.querySelectorAll('.next-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                const nextTabId = button.getAttribute('data-next-tab');
+                const nextTab = document.getElementById(nextTabId);
+
+                if (nextTab) {
+                    nextTab.classList.remove('disabled');
+                    unlockedTabs.add(nextTabId);
+
+                    const currentTab = button.closest('.tab-pane').id;
+                    const currentNavLink = document.querySelector(`[href="#${currentTab}"]`);
+                    currentNavLink.classList.remove('disabled');
+
+                    nextTab.click();
+                }
+            });
+        });
+
+        document.querySelectorAll('.star-rating').forEach(starRatingDiv => {
+            const feedbackId = starRatingDiv.getAttribute('data-feedback-id');
+            const hiddenInput = document.querySelector(`input[name='feedback${feedbackId}_rating']`);
+
+            if (!hiddenInput) {
+                console.error(`Hidden input for feedback ${feedbackId} not found`);
+                return;
+            }
+
+            starRatingDiv.querySelectorAll('.star').forEach(star => {
+                star.addEventListener('click', () => {
+                    const value = star.getAttribute('data-value');
+                    const stars = Array.from(star.parentElement.children);
+
+                    stars.forEach(s => s.classList.remove('filled'));
+
+                    for (let i = 0; i < value; i++) {
+                        stars[i].classList.add('filled');
+                    }
+
+                    hiddenInput.value = value;
+                    feedbackRatings[`feedback${feedbackId}_rating`] = value;  
+                });
+            }); 
+        });
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                if (tab.classList.contains('disabled')) {
+                    e.preventDefault();
+                }
+            });
+        });
+
+        tabs[0].classList.remove('disabled');
+    });
+</script>
+
+
+<style>
+    
+    .feedback-rating-container {
+        display: flex;
+        align-items: baseline; 
+        justify-content: center; 
+        margin-top: 1rem; 
+    }
+    
+    .star-rating .star {
+        font-size: 30px; 
+        color: #ddd; 
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+    
+    .mt-3, .my-3 {
+        margin-top: 1rem !important;
+        text-align: center;
+    }
+    
+    .star-rating .star.filled {
+        color: #ffc107; 
+    }
+    
+    .not-helpful {
+        color: red;
+        position: relative;
+        right: 0.6rem;
+        bottom: 0.2rem;
+        font-weight: 600;
+    }
+    
+    .helpful {
+        color: green;
+        position: relative;
+        left: 0.6rem;
+        bottom: 0.2rem;
+        font-weight: 600;
+    }
+
+label {
+    font-weight: 600;
+}
+
+</style>
+
+{% endblock %}
+ 

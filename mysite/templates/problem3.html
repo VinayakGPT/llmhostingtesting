@@ -1,0 +1,265 @@
+{% extends "base2.html" %}
+{% block title %}Problem 3{% endblock %}
+
+{% block content %}
+<form id="problem3-form" method="post" novalidate>
+    {% csrf_token %}
+    <div class="container">
+        <br> 
+        <h2>3. Count Primes</h2>
+        <div class="problem-statement">
+            <pre class="wrap"><h5><b>Problem Statement:</b></h5>Given a positive integer N, count the number of unique positive integer pairs {p1, p2} such that:
+0 &lt;= p1 &lt;= N
+0 &lt;= p2 &lt;= N
+p1 + 2 = p2
+p1 and p2 are primes
+Example:
+Input: 11
+Output: 2
+Explanation: There are two twin prime pairs below 11: {3, 5} and {5, 7}
+Input: 19
+Output: 4
+Explanation: There are four twin prime pairs below 19: {3, 5}, {5, 7}, {11, 13} and {17, 19}</pre>
+        </div>
+        <p><pre class="wraptext"><h5><b>Incorrect Solution:</b></h5><code><span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span>
+<span class="keyword">int</span> <span class="function">check_prime</span>(<span class="keyword">int</span> num)
+{
+    <span class="keyword">int</span> i;
+    <span class="keyword">for</span>(i=2; i&lt;num; i++)
+        <span class="keyword">if</span>(num%i==0)
+            <span class="keyword">return</span> 0;
+    <span class="keyword">return</span> 1;
+}
+<span class="keyword">int</span> <span class="function">main</span>()
+{
+    <span class="keyword">int</span> N, i, number_of_pairs=0;
+    <span class="function">scanf</span>(<span class="string">"%d"</span>, &N);
+    <span class="keyword">for</span>(i=2; i&lt;=N; i++)
+        <span class="keyword">if</span>(<span class="function">check_prime</span>(i) && <span class="function">check_prime</span>(i+2))
+            number_of_pairs++;
+    
+    <span class="function">printf</span>(<span class="string">"%d"</span>, number_of_pairs);
+    <span class="keyword">return</span> 0;
+}</code></pre></p>
+        <div class="form-group">
+            <b>{{ form.error_description_31.label_tag }}</b><br>
+            {{ form.error_description_31 }}
+        </div>
+        <div class="form-group">
+            <label for="understandability31"> <b> {{ form.understandability31.label_tag }} </b> </label>
+            <div class="star-rating mt-3" data-feedback-id="31">
+                <span style="color: green; font-size: 0.9rem; position: relative; bottom: 0.25rem; font-weight: 600">Very Easy</span>
+                <span class="star {% if understandability.understandability31 >= 1 %}filled{% endif %}" data-value="1">&#9733;</span>
+                <span class="star {% if understandability.understandability31 >= 2 %}filled{% endif %}" data-value="2">&#9733;</span>
+                <span class="star {% if understandability.understandability31 >= 3 %}filled{% endif %}" data-value="3">&#9733;</span>
+                <span class="star {% if understandability.understandability31 >= 4 %}filled{% endif %}" data-value="4">&#9733;</span>
+                <span class="star {% if understandability.understandability31 >= 5 %}filled{% endif %}" data-value="5">&#9733;</span>
+                <span style="color: red; font-size: 0.9rem; position: relative; bottom: 0.25rem; font-weight: 600">Very Difficult</span>
+            </div>
+            <input type="hidden" name="understandability31" id="understandability31" value="{{ understandability.understandability31 }}">
+        </div>
+        <div class="form-group">
+            <button type="button" id="show-feedback-btn3" class="btn btn-secondary">Show Feedback</button>
+        </div>
+        <div id="conditional-content3" class="hidden">
+            <div class="feedback">
+                <pre class="wrap">
+<h5><b>Feedback:</b></h5>{{ highest_rating_content }}</p></pre>
+{% comment %} <p><strong>Name:</strong> {{ highest_feedback_name }}</p> {% endcomment %}
+{% comment %} <p><strong>Content:</strong> {% endcomment %}
+            </div>
+            <div class="form-group">
+                <b>{{ form.error_description_32.label_tag }}</b><br>
+                {{ form.error_description_32 }}
+            </div>
+            <div class="form-group">
+                <label for="understandability32"> <b> {{ form.understandability32.label_tag }} </b> </label>
+                <div class="star-rating mt-3" data-feedback-id="32">
+                    <span style="color: red; font-size: 0.9rem; position: relative; bottom: 0.25rem; font-weight: 600">Not Helpful</span>
+                    <span class="star {% if understandability.understandability32 >= 1 %}filled{% endif %}" data-value="1">&#9733;</span>
+                    <span class="star {% if understandability.understandability32 >= 2 %}filled{% endif %}" data-value="2">&#9733;</span>
+                    <span class="star {% if understandability.understandability32 >= 3 %}filled{% endif %}" data-value="3">&#9733;</span>
+                    <span class="star {% if understandability.understandability32 >= 4 %}filled{% endif %}" data-value="4">&#9733;</span>
+                    <span class="star {% if understandability.understandability32 >= 5 %}filled{% endif %}" data-value="5">&#9733;</span>
+                    <span style="color: green; font-size: 0.9rem; position: relative; bottom: 0.25rem; font-weight: 600">Very Helpful</span>
+                </div>
+                <input type="hidden" name="understandability32" id="understandability32" value="{{ understandability.understandability32 }}">
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" id="submit-btn" class="btn btn-primary">Save & Next</button>
+        </div>
+    </div>
+</form> 
+
+<nav aria-label="Page navigation example" class="mt-4">
+    <ul class="pagination justify-content-center">
+        <li class="page-item {% if 1 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem1' 1 %}">1</a>
+        </li>
+        <li class="page-item {% if 2 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem2' 2 %}">2</a>
+        </li>
+        <li class="page-item {% if 3 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem3' 3 %}">3</a>
+        </li>
+        <li class="page-item {% if 4 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem4' 4 %}">4</a>
+        </li>
+        <li class="page-item {% if 5 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem5' 5 %}">5</a>
+        </li>
+        <li class="page-item {% if 6 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem6' 6 %}">6</a>
+        </li>
+        <li class="page-item {% if 7 not in visited_pages %}disabled{% endif %}">
+            <a class="page-link" href="{% url 'problem7' 7 %}">7</a>
+        </li> 
+    </ul>
+</nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const showFeedbackBtn = document.getElementById('show-feedback-btn3');
+        showFeedbackBtn.disabled = true;
+
+        function checkFeedbackButtonState() {
+            const storedUnderstandability = localStorage.getItem('understandability31');
+            const storedErrorDescription31 = localStorage.getItem('error_description_31');
+
+            if (storedUnderstandability && storedErrorDescription31) {
+                showFeedbackBtn.disabled = false; 
+            } else {
+                showFeedbackBtn.disabled = true; 
+            }
+        }
+
+        checkFeedbackButtonState();
+
+        document.querySelectorAll('.star-rating').forEach(starRatingDiv => {
+            const feedbackId = starRatingDiv.getAttribute('data-feedback-id');
+            const hiddenInput = document.querySelector(`input[name='understandability${feedbackId}']`);
+
+            const stars = starRatingDiv.querySelectorAll('.star');
+
+            const storedRating = localStorage.getItem(`understandability${feedbackId}`);
+            if (storedRating) {
+                hiddenInput.value = storedRating;
+
+                stars.forEach((star, index) => {
+                    if (index < storedRating) {
+                        star.classList.add('filled');
+                    }
+                });
+            }
+
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const value = star.getAttribute('data-value');
+
+                    stars.forEach(s => s.classList.remove('filled'));
+
+                    for (let i = 0; i < value; i++) {
+                        stars[i].classList.add('filled');
+                    }
+
+                    hiddenInput.value = value;
+                    localStorage.setItem(`understandability${feedbackId}`, value);
+
+                    if (feedbackId === '31') {
+                        checkFeedbackButtonState();
+                    }
+                });
+            });
+        });
+
+        const errorDescription31Radios = document.querySelectorAll('input[name="error_description_31"]');
+        const storedRadioValue31 = localStorage.getItem('error_description_31');
+        if (storedRadioValue31) {
+            errorDescription31Radios.forEach(radio => {
+                if (radio.value === storedRadioValue31) {
+                    radio.checked = true;
+                }
+            });
+        }
+
+        errorDescription31Radios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.checked) {
+                    localStorage.setItem('error_description_31', radio.value);
+                    checkFeedbackButtonState(); 
+                }
+            });
+        });
+
+        const errorDescription32Radios = document.querySelectorAll('input[name="error_description_32"]');
+        const storedRadioValue32 = localStorage.getItem('error_description_32');
+        if (storedRadioValue32) {
+            errorDescription32Radios.forEach(radio => {
+                if (radio.value === storedRadioValue32) {
+                    radio.checked = true;
+                }
+            });
+        }
+
+        errorDescription32Radios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (radio.checked) {
+                    localStorage.setItem('error_description_32', radio.value);
+                }
+            });
+        });
+
+        const submitBtn = document.getElementById('submit-btn');
+        submitBtn.addEventListener('click', (e) => {
+            const requiredFields = document.querySelectorAll('input[type="hidden"]');
+            let allFilled = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value || field.value === "" || field.value == "0") {
+                    allFilled = false;
+                }
+            });
+
+            const errorDescription31Selected = document.querySelector('input[name="error_description_31"]:checked');
+            const errorDescription32Selected = document.querySelector('input[name="error_description_32"]:checked');
+
+            if (!allFilled || !errorDescription31Selected || !errorDescription32Selected) {
+                e.preventDefault();
+                alert('Please answer all the questions (including those revealed when you click the Show Feedback button) before proceeding.');
+            }
+        });
+
+        window.history.pushState(null, document.title, window.location.href);
+        window.addEventListener('popstate', function(event) {
+            alert("This action is not allowed. Please use the navigation buttons provided.");
+            window.history.pushState(null, document.title, window.location.href);
+        });
+    });
+</script>
+
+
+
+<style>
+    
+    .star-rating .star {
+        font-size: 30px; 
+        color: #ddd; 
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+    
+    .mt-3, .my-3 {
+        margin-top: 1rem !important;
+        text-align: center;
+    }
+    
+    .star-rating .star.filled {
+        color: #ffc107; 
+    }
+    
+</style>
+
+{% endblock %}
